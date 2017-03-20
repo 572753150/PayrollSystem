@@ -1,0 +1,200 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns="http://www.w3.org/1999/html">-->
+<!--<head id="head">-->
+<!--<meta charset="UTF-8">-->
+
+
+<!--<title>WordGame</title>-->
+
+
+<!--</head>-->
+<!--<body>-->
+<!--<div class="container">-->
+<!--<div id="login">-->
+<!--<div class="things-title">Welcome</div>-->
+<!--<form id="login-form" class="pull-right">-->
+<!--<h3>Word Game</h3>-->
+<!--<div>-->
+<!--<div>-->
+<!--<div class="form-group">-->
+<!--<label for="username" class="sr-only">Username</label>-->
+<!--<input type="text" class="form-control" id="username" placeholder="username">-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<label for="password" class="sr-only">Password</label>-->
+<!--<input type="password" class="form-control" id="password" placeholder="password">-->
+<!--</div>-->
+<!--</div>-->
+<!--<button type="submit" onclick="login(event)" class="btn btn-primary btn-sm">Login-->
+<!--<i class="glyphicon glyphicon-chevron-right"></i>-->
+<!--</button>-->
+<!--</div>-->
+<!--</form>-->
+<!--</div>-->
+
+
+<!--&lt;!&ndash; The main view &ndash;&gt;-->
+<!--<div id="content">-->
+<!--<div class="row ">-->
+<!--<div class="well well-sm form-inline">-->
+<!--<span>Welcome</span>-->
+<!--<span class="btn btn-xs btn-default pull-right" style="display:inline-block;" onclick="logout(event)">Logout</span>-->
+<!--<span class="pull-right" id="email" style="margin-right: 1em;"></span>-->
+<!--</div>-->
+<!--<div class="well well-sm form-inline left">-->
+<!--<label class="gap">Font:<select id="font"></select></label>-->
+<!--<label class="gap">Level <select id="level">-->
+<!--<option>easy</option>-->
+<!--<option selected>medium</option>-->
+<!--<option>hard</option>-->
+<!--</select> </label>-->
+<!--<div class="input-group gap">-->
+<!--<div class="input-group-addon">Word</div>-->
+<!--<input type="color" class="colorBack" id="wordColor">-->
+<!--</div>-->
+<!--<div class="input-group gap">-->
+<!--<div class="input-group-addon">Guess</div>-->
+<!--<input type="color" class="colorBack" id="guessColor">-->
+<!--</div>-->
+<!--<div class="input-group gap">-->
+<!--<div class="input-group-addon">Fore</div>-->
+<!--<input type="color" class="colorBack" id="textColor">-->
+<!--</div>-->
+<!--<div class="input-group pull-right">-->
+<!--<span onclick="createGame()" class="btn btn-sm btn-primary " id="createGame">new Game</span>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+
+<!--<br>-->
+
+<!--&lt;!&ndash; table  &ndash;&gt;-->
+
+<!--<div class="row">-->
+<!--<div id="second">-->
+<!--<div class="well well-sm form-inline">-->
+<!--<table id="table">-->
+<!--</table>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+
+<!--<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html>
+<head id="head">
+    <meta charset="UTF-8">
+    <title>word game</title>
+
+    <script src="javascripts/jrj6out.js"></script>
+    <script>try {
+        Typekit.load({async: false});
+    } catch (e) {
+    }</script>
+
+    <link href="stylesheets/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="javascripts/jquery.min.js"></script>
+    <script src="javascripts/bootstrap.min.js"></script>
+    <script src="javascripts/myJs.js"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+
+
+    <script src="javascripts/prefixfree.min.js"></script>
+</head>
+
+<body>
+
+<div class="x-mark" onclick="logout(event)">
+    <div style="margin-left: 10px">
+        <div class="left"></div>
+        <div class="right"></div>
+    </div>
+</div>
+
+
+<div class="intro-container">
+
+    <h1>Word Game</h1>
+    <div id="login">
+        <form style="width: 30%;;margin-left: 35%;background: transparent ">
+            <div class="form-group">
+                <label for="username" class="sr-only">Username</label>
+                <input type="text" class="form-control" id="username" placeholder="username" style="height: 50px">
+            </div>
+            <div class="form-group">
+                <label for="password" class="sr-only">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="password" style="height: 50px">
+            </div>
+            <div class="button shift-camera-button">
+                <div class="border">
+                    <div class="left-plane"></div>
+                    <div class="right-plane"></div>
+                </div>
+                <div class="text">Login</div>
+            </div>
+        </form>
+    </div>
+
+</div>
+<div class="sky-container">
+    <div id="content">
+        <div class="row ">
+            <div style="background: transparent;border: 0px" class="well well-sm form-inline left "><div id="email" style="font-size: medium" class="pull-right"> aaa </div></div>
+
+            <div class="well well-sm form-inline left" >
+                <label class="gap" style="color: black">Font:<select id="font"></select></label>
+                <label class="gap" style="color: black">Level <select id="level">
+                    <option>easy</option>
+                    <option selected>medium</option>
+                    <option>hard</option>
+                </select> </label>
+                <div class="input-group gap">
+                    <div class="input-group-addon">Word</div>
+                    <input type="color" class="colorBack" id="wordColor">
+                </div>
+                <div class="input-group gap">
+                    <div class="input-group-addon">Guess</div>
+                    <input type="color" class="colorBack" id="guessColor">
+                </div>
+                <div class="input-group gap">
+                    <div class="input-group-addon">Fore</div>
+                    <input type="color" class="colorBack" id="textColor">
+                </div>
+                <div class="input-group pull-right">
+                    <span onclick="createGame()" class="btn btn-sm btn-primary " id="createGame">new Game</span>
+                </div>
+            </div>
+        </div>
+
+
+        <br>
+
+        <div class="row">
+            <div id="second">
+                <div class="well well-sm form-inline">
+                    <table id="table">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src='javascripts/jquery.min.js'></script>
+<script src='javascripts/TweenMax.min.js'></script>
+<script src='javascripts/three.min.js'></script>
+<script src="javascripts/index.js"></script>
+
+<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
+</div>
+</body>
+</html>
