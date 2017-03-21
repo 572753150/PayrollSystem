@@ -49,12 +49,9 @@
 
             <!-- Nav tabs -->
             <ul class="nav nav-pills" role="tablist">
-                <li role="presentation" class="active"><a href="#myAccount" aria-controls="myAccount" role="tab"
-                                                          data-toggle="tab">My Account</a></li>
-                <li role="presentation"><a href="#hire" aria-controls="hire" role="tab" data-toggle="tab">Hire Employee</a>
-                </li>
-                <li role="presentation"><a href="#update" aria-controls="update" role="tab" data-toggle="tab">Update
-                    Account</a></li>
+                <li role="presentation" class="active"><a href="#myAccount" aria-controls="myAccount" role="tab" data-toggle="tab">My Account</a></li>
+                <li role="presentation" id="hireTab"><a href="#hire" aria-controls="hire" role="tab" data-toggle="tab">Hire Employee</a></li>
+                <li role="presentation" id="updateTab"><a href="#update" aria-controls="update" role="tab" data-toggle="tab">Update Account</a></li>
                 <li role="presentation"><a href="index.html" onclick="logout(event)">Log Out</a></li>
             </ul>
 
@@ -109,7 +106,7 @@
 
                 <!--hire Employee-->
 
-                <div role="tabpanel" class="tab-pane" id="hire" disabled="disabled">
+                <div role="tabpanel" class="tab-pane" id="hire" >
                     <br>
                     <form class="form-horizontal" id="form_new_employee">
                         <div class="form-group">
@@ -150,9 +147,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="salary" class="col-sm-2 control-label">Salary ($)：</label>
+                            <label for="basic_salary" class="col-sm-2 control-label">Basic Salary ($)：</label>
                             <div class="col-sm-10">
-                                <input class="form-control" id="salary" placeholder="Basic Salary">
+                                <input class="form-control" id="basic_salary" placeholder="Basic Salary">
                             </div>
                         </div>
                         <div class="form-group">
@@ -167,7 +164,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" id="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" id="submit" class="btn btn-primary"  onclick="hireEmplyee(event)">Submit</button>
                             </div>
                         </div>
                     </form>
