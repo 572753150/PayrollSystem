@@ -10,6 +10,7 @@
 body {
     padding: 50px;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    overflow: scroll!important;
 }
 
 a {
@@ -126,9 +127,8 @@ td, th {
 /**/
 body {
     position: relative;
-    margin: 0 ;
+    margin: 0;
     overflow: hidden;
-    padding: 0px !important;
 }
 
 .intro-container {
@@ -253,7 +253,7 @@ h1 {
 .sky-container {
     position: absolute;
     color: white;
-    /*text-transform: uppercase;*/
+    text-transform: uppercase;
     margin: 0 auto;
     right: 0;
     left: 0;
@@ -264,8 +264,8 @@ h1 {
 @media screen and (min-width: 860px) {
     .sky-container {
         top: 18%;
-        right: 20%;
-        left: 20%;
+        right: 12%;
+        left: auto;
     }
 }
 .sky-container__left, .sky-container__right {
@@ -350,4 +350,7 @@ h1 {
     bottom: 7px;
     left: 7px;
     color: #E62117;
+}
+.useless{
+
 }
