@@ -297,7 +297,7 @@ h1 {
 }
 
 .text-left {
-    text-align: left;
+    text-align: left!important;
 }
 
 .twitter:hover a {

@@ -16,7 +16,7 @@ function init( cb ) {
         } );
         account.save( function(err, savedAccount ) {
             result.push( savedAccount );
-            if( result.length == 4 ) cb( null, result );
+            if( result.length == 3 ) cb( null, result );
         } );
     } );
 };
