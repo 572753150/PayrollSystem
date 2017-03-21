@@ -79,26 +79,29 @@
                             <label class="col-sm-2 control-label">Phone：</label>
                             <label class="col-sm-10 control-label text-left" id="label_phone"></label>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Basic Salary ($)：</label>
-                            <label class="col-sm-10 control-label text-left" id="label_basic_salary"></label>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Reward ($)：</label>
-                            <label class="col-sm-10 control-label text-left" id="label_reward"></label>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Deduction ($)：</label>
-                            <label class="col-sm-10 control-label text-left" id="label_deduction"></label>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Tax ($)：</label>
-                            <label class="col-sm-10 control-label text-left" id="label_tax"></label>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Final Salary ($)：</label>
-                            <label class="col-sm-10 control-label text-left" id="label_final_salary"></label>
-                        </div>
+
+                        <table id="table" class="table table-condensed"></table>
+
+                        <!--<div class="form-group">-->
+                            <!--<label class="col-sm-2 control-label">Basic Salary ($)：</label>-->
+                            <!--<label class="col-sm-10 control-label text-left" id="label_basic_salary"></label>-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<label class="col-sm-2 control-label">Reward ($)：</label>-->
+                            <!--<label class="col-sm-10 control-label text-left" id="label_reward"></label>-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<label class="col-sm-2 control-label">Deduction ($)：</label>-->
+                            <!--<label class="col-sm-10 control-label text-left" id="label_deduction"></label>-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<label class="col-sm-2 control-label">Tax ($)：</label>-->
+                            <!--<label class="col-sm-10 control-label text-left" id="label_tax"></label>-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<label class="col-sm-2 control-label">Final Salary ($)：</label>-->
+                            <!--<label class="col-sm-10 control-label text-left" id="label_final_salary"></label>-->
+                        <!--</div>-->
 
                     </div>
 
@@ -173,10 +176,10 @@
                 <!--update account-->
                 <div role="tabpanel" class="tab-pane" id="update">
                     <br>
-                    <form class="form-inline">
-                        <input type="email" class="form-control input-lg" id="search" placeholder="Email" style="width: 90%">
-                        <button type="submit" class="btn btn-primary btn-lg pull-right">Search</button>
-                    </form>
+                    <div class="form-inline">
+                        <input type="email" class="form-control input-lg" id="searchContent" placeholder="Email" style="width: 90%">
+                        <button type="submit" class="btn btn-primary btn-lg pull-right" onclick="search()">Search</button>
+                    </div>
                     <div id="searchResults">
 
                     </div>

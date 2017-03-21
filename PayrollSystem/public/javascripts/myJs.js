@@ -50,7 +50,15 @@ function setUser(data) {
     $("#label_name").text(data ? (data.name.first + " " + data.name.last) : null);
     $("#label_phone").text(data ? data.phone : null);
     $("#label_adderss").text(data ? data.address : null)
-    $("#label_basic_salary").text(data ? data.basic_salary : null);
+    $.ajax({
+        url:"api/accounts/"+state.user.id+"/salarys",
+        method:"GET",
+        success:function (data) {
+            console.log(data)
+            console.log("sss");
+            // updateTable(data);
+        }
+    })
 }
 
 function login(evt) {
@@ -106,6 +114,31 @@ function hireEmplyee(event) {
     });
 }
 
+function search() {
+    var email=$("#searchContent").val();
+    $.ajax({
+        url:'api/accounts'+"/"+email,
+        method: "GET",
+        success:function(data){
+            if(data){
+                alert ("Find")
+                createUpdateTable(data);
+                console.log(data)
+            }else {
+                alert("No Such guy!")
+            }
+        },
+        error:function () {
+
+        }
+
+    })
+}
+
+function createUpdateTable(data) {
+$("#searchResults").append('')
+}
+
 
 
 function logout(evt) {
@@ -116,6 +149,9 @@ function logout(evt) {
             setUser(null);
 
 
+        },
+        error:function () {
+
         }
     });
 }
@@ -125,6 +161,25 @@ function retrieveEmployee(){
         method:'GET',
         success: updateTable
     });
+}
+
+function updateTable( salary ) {
+    var table = $('#table').empty();
+    var props = ['Time','Basic Salary', 'Reward','Deduction','Tax','Final Salary' ];
+    var propOfData=['time','basic_salary', 'reward','deduction','tax','final' ];
+
+    // make header
+    makeRow( 'th', props ).appendTo( table );
+
+    salary.forEach( singleSalary => {
+        var tr = makeRow( 'td', propOfData.map( p => singleSalary[p] ) );
+        tr.appendTo(table);
+        singleSalary.row = tr;
+    } );
+};
+
+function makeRow( type, values ) {
+    return $(`<tr><${type}>` + values.join(`</${type}><${type}>`) + `</${type}></${type}>` );
 }
 
 
