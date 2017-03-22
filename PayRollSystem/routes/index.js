@@ -9,7 +9,7 @@ router.get('/accounts/init', function (req, res, next) { //初始化数据库
 });
 
 router.all('/accounts/:aid/*', function (req, res, next) { // 验证用户的合法性
-    accounts.findById(req.params.aid, function (error, pathAccount) {
+    accounts.findById(req.session.user.id, function (error, pathAccount) {
         var authenticatedAccount = req.session.user;
         if (authenticatedAccount && pathAccount && authenticatedAccount.id == pathAccount.id) {
             next();
@@ -91,13 +91,15 @@ router.get('/accounts/:aid/salarys/:sid', function (req, res, next) {  //得到�
     });
 });
 
-router.post('/accounts/:aid/salarys', function (req, res, next) { // 创建一个新的salary
-    accounts.findById(req.params.aid, function (err, result) {
+router.post('/accounts/:aid/:uid/salarys', function (req, res, next) { // 创建一个新的salary
+    console.log('acc',req.params.uid)
+    accounts.findById(req.params.uid, function (err, result) {
         if (err) res.status(500).send({'msg': 'Error no such account!'})
         else {
-            var newsalary = req.body;
+            var newsalary = req.body || {};
             newsalary.basic_salary = result.basic_salary;
-            salarys.create(req.params.aid, newsalary, function (err, thing) {
+            console.log('salary',newsalary);
+            salarys.create(req.params.uid, newsalary, function (err, thing) {
                 if (err) {
                     res.status(500).send({'msg': 'Error creating thing'});
                 } else {

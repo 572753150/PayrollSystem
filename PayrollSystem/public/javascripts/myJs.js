@@ -1,6 +1,6 @@
 var state = {
     user: null,
-    page: {pages: ["login", "content"], page: null}
+    page: {pages: ["login", "content", "accountModal", "salaryModal"], page: null}
 }
 
 function setPage(page) {
@@ -55,8 +55,7 @@ function setUser(data) {
         method:"GET",
         success:function (data) {
             console.log(data)
-            console.log("sss");
-            // updateTable(data);
+            updateTable(data);
         }
     })
 }
@@ -87,35 +86,48 @@ function login(evt) {
 
 function hireEmplyee(event) {
     event.preventDefault();
-    if ($("#eamil").val()==""||$("#firstName").val()==""||$("#lastName").val()==""||$("#address").val()==""||$("#phone").val()==""||$("#title").val()==""||$("#basic_salary")==""){
+    if ($("#email").val()==""||$("#firstName").val()==""||$("#lastName").val()==""||$("#address").val()==""||$("#phone").val()==""||$("#title").val()==""||$("#basic_salary")==""){
         alert("Please fill completely!");
         return;
     }
     var info = {
-            email: $("#eamil").val(),
-            name: {
-                first: $("#firstName").val(),
-                last: $("#lastName").val(),
-            },
-            address: $("#address").val(),
-            phone: $("#phone").val(),
-            title: $("#title").val(),
-            basic_salary: $("#basic_salary"),
-            priority: parseInt($("#priority").val()),
-        }
-
+        email: $("#email").val(),
+        name: {
+            first: $("#firstName").val(),
+            last: $("#lastName").val(),
+        },
+        address: $("#address").val(),
+        phone: $("#phone").val(),
+        title: $("#title").val(),
+        password:$("#setPassword").val().trim(),
+        basic_salary: parseInt($("#basic_salary").val()),
+        priority: parseInt($("#priority").val()),
+    }
     $.ajax({
         url: 'api/accounts/' + state.user.id + '/',
         method: 'POST',
         data: info,
-        success: function () {
-                alert("Hire successfully!")
+        success: function (account) {
+            console.log('acc',account);
+            setSalary(account)
+            alert("Hire successfully!")
+        }
+    });
+}
+
+function setSalary(account){
+    console.log('accww',account);
+    $.ajax({
+        url: `api/accounts/${state.user.id}/${account.id}/salarys`,
+        method: 'POST',
+        success: function (ccount) {
+            console.log('setsalary',ccount);
         }
     });
 }
 
 function search() {
-    var email=$("#searchContent").val();
+    var email=$("#searchContent").val().trim();
     $.ajax({
         url:'api/accounts'+"/"+email,
         method: "GET",

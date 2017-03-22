@@ -9,14 +9,11 @@ router.post('/logout', function (req, res, next) {
 });
 
 router.post('/login', function (req, res, next) {
-    console.log("usname"+ req.body.username + "pass" + req.body.password);
     req.session.regenerate(function (err) {
         users.findByEmail(req.body.username, function (err, account) {
-            console.log(JSON.stringify(account))
             if (account && account.password == req.body.password) {
                 req.session.user = account;
                 delete account.password;
-                console.log(account)
                 res.json(account);
             } else {
                 res.json(400,{msg:'Error with username/password or status'});
