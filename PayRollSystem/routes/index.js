@@ -44,9 +44,9 @@ router.get('/accounts', function (req, res, next) {   // 列出可管理所有�
     });
 });
 
-
-router.put('/accounts/:aid/', function (req, res, next) { // 修改指定的account
-    salarys.update(req.params.aid, req.body, function (err, thing) {
+router.put('/accounts/:aid/:uid', function (req, res, next) { // 修改指定的account
+    var
+    salarys.update(req.params.uid, req.body, function (err, thing) {
         if (err) {
             res.status(403).json({msg: err});
         } else {
@@ -65,6 +65,7 @@ router.get('/accounts/:aid/salarys', function (req, res, next) {
         }
     });
 });
+
 
 
 router.get('/accounts/:email', function (req, res, next) {

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <title>Title</title>
+    <style type="text/css">
+
+        .background {
+            background-image: url(/images/sidebar-2.jpg);
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover; /* rescales the image to cover the window */
+            background-color: #464646; /* shown during image load */
+        }
+    </style>
+</head>
+<body class="background">
+<div id="div_content" class="container col-md-6 col-md-offset-3" style="margin-top: 16%">
+    <div class="well well-sm">
+        <h1>Payroll</h1>
+        <form method="post" action="/payroll/api/login">
+
+            <div class="form-group" style="margin-top:2em">
+                <label for="input_eid">Employee ID</label>
+                <input type="text" class="form-control" id="input_eid" name="eid" placeholder="Employee ID">
+            </div>
+            <div class="form-group">
+                <label for="input_password">Password</label>
+                <input type="password" class="form-control" name="password" id="input_password" placeholder="Password">
+            </div>
+
+            <button type="submit" id="btn_login" class="btn btn-default">Login</button>
+        </form>
+</div></div>
+</body>
+<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script>
+//    $(function () {
+//        var input_eid=$('#input_eid'),
+//            input_password=$('#input_password'),
+//            btn_login=$('#btn_login');
+//        btn_login.click(function (event) {
+//            event.preventDefault();
+//            $.ajax({
+//                url: '/payroll/api/login',
+//                data: {"eid": input_eid.val(),
+//                    "password": input_password.val()
+//                },
+//                method: 'POST',
+//                success: (data, status, xhr) => {
+//                    alert(JSON.stringify(data));
+//
+//                },
+//                error: (err) => {
+//                    alert(err);
+//                },
+//            });
+//        });
+//
+//    });
+
+
+</script>
+</html>
