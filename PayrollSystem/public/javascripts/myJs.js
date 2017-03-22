@@ -1,4 +1,5 @@
 var state = {
+    modal : {account : null},
     user: null,
     page: {pages: ["login", "content", "accountModal", "salaryModal"], page: null}
 }
@@ -51,7 +52,7 @@ function setUser(data) {
     $("#label_phone").text(data ? data.phone : null);
     $("#label_adderss").text(data ? data.address : null)
     $("#label_title").text(data ? data.title : null)
-
+    retrieveEmployee();
     $.ajax({
         url:"api/accounts/"+state.user.id+"/salarys",
         method:"GET",
@@ -163,11 +164,9 @@ function logout(evt) {
         method: 'POST',
         success: function () {
             setUser(null);
-
-
         },
         error:function () {
-
+            alert('error!!');
         }
     });
 }
@@ -175,9 +174,49 @@ function retrieveEmployee(){
     $.ajax({
         url : 'api/accounts',
         method:'GET',
-        success: updateTable
+        success: updateEmployeeTable
     });
 }
+
+function updateEmployeeTable(results){
+    var table = $('#account_table').empty();
+    var props = ['id','email', 'name','phone','address'];
+    // make header
+    makeRow( 'th', props ).appendTo( table );
+
+    results.forEach( result => {
+        var tr = makeRow( 'td', props.map( p => result[p] ) );
+        tr.click((event) => showModal(result));
+        tr.appendTo(table);
+        result.row = tr;
+    } );
+}
+
+function showModal(account){
+    state.modal.account = account;
+    if(account) {
+        console.log('accout',account);
+        $('#emailmodal').text(account.email);
+        $('#namemodal').text(account.name.first + " " + account.name.last);
+        $('#titlemodal').text(account.title);
+        $('#phoneModal').val(account.phone);
+        $('#addressModal').val(account.address);
+        $('#basic_salaryModal').val(account.basic_salary);
+        $('#priorityModal').val(account.priority);
+        $('#account_table').slideUp();
+        $('#accountModal').slideDown();
+        $('#salaryModal').slideDown();
+    }else{
+        $('#account_table').slideDown();
+        $('#accountModal').slideUp();
+        $('#salaryModal').slideUp();
+    }
+}
+
+function cancel() {
+    showModal(null);
+}
+
 
 function updateTable( salary ) {
     var table = $('#table').empty();

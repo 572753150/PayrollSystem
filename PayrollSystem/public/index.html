@@ -229,6 +229,20 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="deductionmodal" class="col-sm-2 control-label">Deduction：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="deductionmodal" placeholder="deduction" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="rewardmodal" class="col-sm-2 control-label">Reward：</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="rewardModal" placeholder="reward" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="priority" class="col-sm-2 control-label">Priority：</label>
                                 <div class="col-sm-10">
                                     <select id="priorityModal" style="background: transparent">
@@ -241,31 +255,14 @@
 
 
                             <div style="margin-top: 1em;overflow:auto">
-                                <span onclick="updateEmployee()" class="btn btn-sm btn-primary  pull-left">Update</span>
+                                <span onclick="updateEmployee()" class="btn btn-sm btn-primary  pull-left">UpdateEmploy</span>
+                                <span onclick="updateSalary()" class="btn btn-sm btn-primary  pull-left">UpdateSalary</span>
                                 <span onclick="deleteEmployee()" class="btn btn-sm btn-danger pull-left">Delete</span>
-                                <span onclick="cancelaccountmodal()" class="btn btn-sm btn-warning pull-right">Cancel</span>
+                                <span onclick="cancel()" class="btn btn-sm btn-warning pull-right">Cancel</span>
                             </div>
                         </form>
                     </div>
                 </div>
-
-
-                <div id="salaryModal">
-                    <div class="well well-sm">
-                        <form class="form-inline" style="margin-top: 1em;">
-                            <div>
-                                <input type="text" id="deductionmodal" placeholder="deduction" class="form-control">
-                                <input type="text" id="rewardModal" placeholder="reward" class="form-control">
-                            </div>
-                            <div style="margin-top: 1em;overflow:auto">
-                                <span onclick="updateSalary()" class="btn btn-sm btn-primary  pull-left">Update</span>
-                                <span onclick="cancelsalarymodal()" class="btn btn-sm btn-warning pull-right">Cancel</span>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-            </div>
         </div>
     </div>
 </div>
