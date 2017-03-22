@@ -50,6 +50,8 @@ function setUser(data) {
     $("#label_name").text(data ? (data.name.first + " " + data.name.last) : null);
     $("#label_phone").text(data ? data.phone : null);
     $("#label_adderss").text(data ? data.address : null)
+    $("#label_title").text(data ? data.title : null)
+
     $.ajax({
         url:"api/accounts/"+state.user.id+"/salarys",
         method:"GET",
@@ -104,9 +106,11 @@ function hireEmplyee(event) {
         priority: parseInt($("#priority").val()),
     }
     $.ajax({
+
         url: 'api/accounts/' + state.user.id + '/',
         method: 'POST',
-        data: info,
+        contentType:'application/json',
+        data: JSON.stringify(info),
         success: function (account) {
             console.log('acc',account);
             setSalary(account)

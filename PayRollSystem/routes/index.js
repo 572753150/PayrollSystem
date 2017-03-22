@@ -57,7 +57,6 @@ router.put('/accounts/:aid/', function (req, res, next) { // 修改指定的acco
 
 router.get('/accounts/:aid/salarys', function (req, res, next) {
     // 得到所以的salary
-    console.log("ssart",req.params.aid);
     salarys.findByOwner(req.params.aid, function (err, result) {
         if (err) {
             res.json({msg: err});
@@ -92,13 +91,13 @@ router.get('/accounts/:aid/salarys/:sid', function (req, res, next) {  //得到�
 });
 
 router.post('/accounts/:aid/:uid/salarys', function (req, res, next) { // 创建一个新的salary
-    console.log('acc',req.params.uid)
     accounts.findById(req.params.uid, function (err, result) {
         if (err) res.status(500).send({'msg': 'Error no such account!'})
         else {
             var newsalary = req.body || {};
             newsalary.basic_salary = result.basic_salary;
-            console.log('salary',newsalary);
+            newsalary.tax  = result.basic_salary * 0.055;
+            newsalary.final  = result.basic_salary - newsalary.tax;
             salarys.create(req.params.uid, newsalary, function (err, thing) {
                 if (err) {
                     res.status(500).send({'msg': 'Error creating thing'});

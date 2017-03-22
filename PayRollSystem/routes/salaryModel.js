@@ -11,10 +11,7 @@ var salarySchema = mongoose.Schema({
         type : Number,
         default:0
     },
-    tax : {
-        type : Number,
-        default:0.055
-    },
+    tax : Number,
     final : Number,
     time : {
         type : Date,
