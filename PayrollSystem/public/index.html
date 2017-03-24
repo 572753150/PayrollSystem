@@ -49,9 +49,12 @@
 
             <!-- Nav tabs -->
             <ul class="nav nav-pills" role="tablist">
-                <li role="presentation" class="active"><a href="#myAccount" aria-controls="myAccount" role="tab" data-toggle="tab">My Account</a></li>
-                <li role="presentation" id="hireTab"><a href="#hire" aria-controls="hire" role="tab" data-toggle="tab">Hire Employee</a></li>
-                <li role="presentation" id="updateTab"><a href="#update" aria-controls="update" role="tab" data-toggle="tab">Update Account</a></li>
+                <li role="presentation" class="active"><a href="#myAccount" aria-controls="myAccount" role="tab"
+                                                          data-toggle="tab">My Account</a></li>
+                <li role="presentation" id="hireTab"><a href="#hire" aria-controls="hire" role="tab" data-toggle="tab">Hire
+                    Employee</a></li>
+                <li role="presentation" id="updateTab"><a href="#update" aria-controls="update" role="tab"
+                                                          data-toggle="tab">Update Account</a></li>
                 <li role="presentation"><a href="index.html" onclick="logout(event)">Log Out</a></li>
             </ul>
 
@@ -63,131 +66,129 @@
                     <br>
                     <div class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">name：</label>
+                            <label class="col-sm-2 control-label text-left">name：</label>
                             <label class="col-sm-10 control-label text-left" id="label_name"></label>
                         </div>
+
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Title：</label>
-                            <label class="col-sm-10 control-label text-left" id="label_title"></label>
+                            <label class="col-sm-2 control-label text-left">Birthday：</label>
+                            <label class="col-sm-10 control-label text-left" id="label_birthday"></label>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Address：</label>
-                            <label class="col-sm-10 control-label text-left" id="label_adderss"></label>
+                            <label class="col-sm-2 control-label text-left">Department：</label>
+                            <label class="col-sm-10 control-label text-left" id="label_department"></label>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Phone：</label>
-                            <label class="col-sm-10 control-label text-left" id="label_phone"></label>
-                        </div>
-
                         <table id="table" class="table table-condensed"></table>
-
-                        <!--<div class="form-group">-->
-                            <!--<label class="col-sm-2 control-label">Basic Salary ($)：</label>-->
-                            <!--<label class="col-sm-10 control-label text-left" id="label_basic_salary"></label>-->
-                        <!--</div>-->
-                        <!--<div class="form-group">-->
-                            <!--<label class="col-sm-2 control-label">Reward ($)：</label>-->
-                            <!--<label class="col-sm-10 control-label text-left" id="label_reward"></label>-->
-                        <!--</div>-->
-                        <!--<div class="form-group">-->
-                            <!--<label class="col-sm-2 control-label">Deduction ($)：</label>-->
-                            <!--<label class="col-sm-10 control-label text-left" id="label_deduction"></label>-->
-                        <!--</div>-->
-                        <!--<div class="form-group">-->
-                            <!--<label class="col-sm-2 control-label">Tax ($)：</label>-->
-                            <!--<label class="col-sm-10 control-label text-left" id="label_tax"></label>-->
-                        <!--</div>-->
-                        <!--<div class="form-group">-->
-                            <!--<label class="col-sm-2 control-label">Final Salary ($)：</label>-->
-                            <!--<label class="col-sm-10 control-label text-left" id="label_final_salary"></label>-->
-                        <!--</div>-->
-
                     </div>
 
                 </div>
 
                 <!--hire Employee-->
 
-                <div role="tabpanel" class="tab-pane" id="hire" >
+                <div role="tabpanel" class="tab-pane" id="hire">
                     <br>
-                    <form class="form-horizontal" id="form_new_employee">
-                        <div class="form-group">
-                            <label for="email" class="col-sm-2 control-label">Email：</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" type="email" id="email" placeholder="Email" >
+                    <div class="well well-sm">
+                        <form class="form-horizontal" id="form_new_employee">
+                            <div class="form-group">
+                                <label for="email" class="col-sm-2 control-label text-left">Email：</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="email" id="email" placeholder="Email">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="setPassword" class="col-sm-2 control-label">Set Password：</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" id="setPassword" type="text" placeholder="Password">
+                            <div class="form-group">
+                                <label for="setPassword" class="col-sm-2 control-label text-left">Set Password：</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" id="setPassword" type="text" placeholder="Password">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="firstName" class="col-sm-2 control-label">First name：</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" id="firstName" type="text" placeholder="First name">
+                            <div class="form-group">
+                                <label for="firstName" class="col-sm-2 control-label text-left">First name：</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" id="firstName" type="text" placeholder="First name">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="lastName" class="col-sm-2 control-label">Last name：</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" id="lastName" placeholder="Last name">
+                            <div class="form-group">
+                                <label for="lastName" class="col-sm-2 control-label text-left">Last name：</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" id="lastName" placeholder="Last name">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="address" class="col-sm-2 control-label">Address：</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" id="address" placeholder="Address">
+
+
+                            <div class="form-group">
+                                <label for="birthday" class="col-sm-2 control-label text-left">Birthday：</label>
+                                <div class="col-sm-10">
+                                    <input type="date" id="birthday" placeholder="basic_salary" class="form-control">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone" class="col-sm-2 control-label">Phone：</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" id="phone" placeholder="Phone" type="tel">
+
+                            <div class="form-group">
+                                <label for="hiredate" class="col-sm-2 control-label text-left">Hire Date：</label>
+                                <div class="col-sm-10">
+                                    <input type="date" id="hiredate" placeholder="basic_salary" class="form-control">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="title" class="col-sm-2 control-label">Title：</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" id="title" placeholder="Title">
+                            <div class="form-group">
+                                <label for="basic_salary" class="col-sm-2 control-label text-left">Annually Salary
+                                    ($)：</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" id="basic_salary" placeholder="Annually Salary">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="basic_salary" class="col-sm-2 control-label">Basic Salary ($)：</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" id="basic_salary" placeholder="Basic Salary">
+                            <div class="form-group">
+                                <label for="rank" class="col-sm-2 control-label text-left">Rank：</label>
+                                <div class="col-sm-10">
+                                    <select id="rank" class="form-control">
+                                        <option selected>Admin</option>
+                                        <option>Manager</option>
+                                        <option>Developer</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="priority" class="col-sm-2 control-label">Priority：</label>
-                            <div class="col-sm-10">
-                                <select id="priority" style="background: transparent">
-                                    <option value="1" selected> Low</option>
-                                    <option value="2"> Medium</option>
-                                    <option value="3"> High</option>
-                                </select>
+                            <div class="form-group">
+                                <label for="sex" class="col-sm-2 control-label text-left">Sex：</label>
+                                <div class="col-sm-10">
+                                    <select id="sex" class="form-control">
+                                        <option selected>male</option>
+                                        <option>female</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" id="submit" class="btn btn-primary"  onclick="hireEmplyee(event)">Submit</button>
+
+
+                            <div class="form-group">
+                                <label for="department" class="col-sm-2 control-label text-left">Department：</label>
+                                <div class="col-sm-10">
+                                    <select id="department" multiple class="form-control">
+                                        <option>IT</option>
+                                        <option>Market</option>
+                                        <option>Service</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" id="submit" class="btn btn-primary"
+                                            onclick="hireEmplyee(event)">
+                                        Submit
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
 
                 <!--update account-->
                 <div role="tabpanel" class="tab-pane" id="update">
                     <br>
                     <div class="form-inline">
-                        <input type="email" class="form-control input-lg" id="searchContent" placeholder="Email" style="width: 90%">
-                        <button type="submit" class="btn btn-primary btn-lg pull-right" onclick="search()">Search</button>
+                        <input type="email" class="form-control input-lg" id="searchContent" placeholder="Email"
+                               style="width: 90%">
+                        <button type="submit" class="btn btn-primary btn-lg pull-right" onclick="search()">Search
+                        </button>
                     </div>
                     <table id="account_table" class="table table-condensed"></table>
-                    <!--<div id="searchResults">-->
-                    <!--</div>-->
                 </div>
 
                 <div id="accountModal">
@@ -204,29 +205,13 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="title" class="col-sm-2 control-label">Title：</label>
+                                <label for="basic_salary" class="col-sm-2 control-label">Annually Salary：</label>
                                 <div class="col-sm-10">
-                                    <input class="form-control" id="titlemodal" placeholder="Title">
+                                    <input type="text" id="basic_salaryModal" placeholder="basic_salary"
+                                           class="form-control">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="phone" class="col-sm-2 control-label">Phone Number：</label>
-                                <div class="col-sm-10">
-                                    <input type="text" id="phoneModal" placeholder="phone" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="Address" class="col-sm-2 control-label">Address/Place：</label>
-                                <div class="col-sm-10">
-                                    <input type="text" id="addressModal" placeholder="address" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="basic_salary" class="col-sm-2 control-label">Basic Salary：</label>
-                                <div class="col-sm-10">
-                                    <input type="text" id="basic_salaryModal" placeholder="basic_salary" class="form-control">
-                                </div>
-                            </div>
+
 
                             <div class="form-group">
                                 <label for="deductionmodal" class="col-sm-2 control-label">Deduction：</label>
@@ -242,30 +227,21 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="priority" class="col-sm-2 control-label">Priority：</label>
-                                <div class="col-sm-10">
-                                    <select id="priorityModal" style="background: transparent">
-                                        <option value="1" selected> Low</option>
-                                        <option value="2"> Medium</option>
-                                        <option value="3"> High</option>
-                                    </select>
-                                </div>
-                            </div>
-
 
                             <div style="margin-top: 1em;overflow:auto">
-                                <span onclick="updateEmployee()" class="btn btn-sm btn-primary  pull-left">UpdateEmploy</span>
-                                <span onclick="updateSalary()" class="btn btn-sm btn-primary  pull-left">UpdateSalary</span>
+                                <span onclick="updateEmployee()"
+                                      class="btn btn-sm btn-primary  pull-left">UpdateEmploy</span>
+                                <span onclick="updateSalary()"
+                                      class="btn btn-sm btn-primary  pull-left">UpdateSalary</span>
                                 <span onclick="deleteEmployee()" class="btn btn-sm btn-danger pull-left">Delete</span>
                                 <span onclick="cancel()" class="btn btn-sm btn-warning pull-right">Cancel</span>
                             </div>
                         </form>
                     </div>
                 </div>
+            </div>
         </div>
     </div>
-</div>
 </div>
 </body>
 </html>

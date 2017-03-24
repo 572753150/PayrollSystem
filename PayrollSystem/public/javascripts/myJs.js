@@ -49,9 +49,7 @@ function setUser(data) {
     }
     $("#showUser").text(data ? data.email : null);
     $("#label_name").text(data ? (data.name.first + " " + data.name.last) : null);
-    $("#label_phone").text(data ? data.phone : null);
-    $("#label_adderss").text(data ? data.address : null)
-    $("#label_title").text(data ? data.title : null)
+    $("#label_birthday").text(data ? data.phone : null);
     retrieveEmployee();
     $.ajax({
         url:"api/accounts/"+state.user.id+"/salarys",
@@ -89,35 +87,39 @@ function login(evt) {
 
 function hireEmplyee(event) {
     event.preventDefault();
-    if ($("#email").val()==""||$("#firstName").val()==""||$("#lastName").val()==""||$("#address").val()==""||$("#phone").val()==""||$("#title").val()==""||$("#basic_salary")==""){
+    if ($("#email").val()==""||$("#firstName").val()==""||$("#lastName").val()==""||$("#setPassword").val()==""||$("#birthday").val()==""||$("#hiredate").val()==""||$("#basic_salary")==""||
+    $("#department").val().length==0){
         alert("Please fill completely!");
         return;
     }
+    console.log($("#department").val().length);
+    console.log($("#birthday").val());
     var info = {
         email: $("#email").val(),
+        password:$("#setPassword").val().trim(),
         name: {
             first: $("#firstName").val(),
             last: $("#lastName").val(),
         },
-        address: $("#address").val(),
-        phone: $("#phone").val(),
-        title: $("#title").val(),
-        password:$("#setPassword").val().trim(),
-        basic_salary: parseInt($("#basic_salary").val()),
-        priority: parseInt($("#priority").val()),
+        birthday: $("#birthday").val(),
+        hiredate: $("#hiredate").val(),
+        salary: parseInt($("#basic_salary").val()),
+        sex: $("#sex").val(),
+        department:$("#department").val()
     }
-    $.ajax({
-
-        url: 'api/accounts/' + state.user.id + '/',
-        method: 'POST',
-        contentType:'application/json',
-        data: JSON.stringify(info),
-        success: function (account) {
-            console.log('acc',account);
-            setSalary(account)
-            alert("Hire successfully!")
-        }
-    });
+    console.log(info)
+    // $.ajax({
+    //
+    //     url: 'api/accounts/' + state.user.id + '/',
+    //     method: 'POST',
+    //     contentType:'application/json',
+    //     data: JSON.stringify(info),
+    //     success: function (account) {
+    //         console.log('acc',account);
+    //         setSalary(account)
+    //         alert("Hire successfully!")
+    //     }
+    // });
 }
 
 function setSalary(account){
