@@ -1,8 +1,8 @@
 var state = {
-    modal : {account : null},
+    modal: {account: null},
     user: null,
     page: {pages: ["login", "content", "accountModal", "salaryModal"], page: null},
-    superiors:[]
+    superiors: []
 }
 
 function setPage(page) {
@@ -44,10 +44,10 @@ function getAllSuperior() {
         url: 'api/accounts/manager',
         method: 'GET',
         success: function (users) {
-            console.log("users",users)
-            state.superiors=users;
-            for(var i=0;i<users.length;i++){
-                $("#superior").append("<option value="+i+" >"+users[i].name.first+" "+users[i].name.last+"</optionva>")
+            console.log("users", users)
+            state.superiors = users;
+            for (var i = 0; i < users.length; i++) {
+                $(".superior").append("<option value=" + i + " >" + users[i].name.first + " " + users[i].name.last + "</optionva>")
             }
         },
     });
@@ -61,21 +61,21 @@ function setUser(data) {
     if (data.rank == "developer") {
         $("#hireTab").hide();
         $("#updateTab").hide();
-    }else {
+    } else {
         $("#superior").empty();
         getAllSuperior();
     }
     $("#showUser").text(data ? data.email : null);
     $("#label_name").text(data ? (data.name.first + " " + data.name.last) : null);
     $("#label_birthday").text(data ? data.birth : null);
-    $("#label_department").text(data?data.department.join("  , "):'');
-    $("#label_superior").text(data.superior?(data.superior.name.last+" "+data.superior.name.last):'');
+    $("#label_department").text(data ? data.department.join("  , ") : '');
+    $("#label_superior").text(data.superior ? (data.superior.name.last + " " + data.superior.name.last) : '');
 
     retrieveEmployee();
     $.ajax({
-        url:"api/accounts/"+state.user.id+"/salarys",
-        method:"GET",
-        success:function (data) {
+        url: "api/accounts/" + state.user.id + "/salarys",
+        method: "GET",
+        success: function (data) {
             console.log(data)
             updateTable(data);
         }
@@ -108,39 +108,39 @@ function login(evt) {
 
 function hireEmplyee(event) {
     event.preventDefault();
-    if ($("#email").val()==""||$("#firstName").val()==""||$("#lastName").val()==""||$("#setPassword").val()==""||$("#birthday").val()==""||$("#hiredate").val()==""||$("#basic_salary")==""||
-    $("#department").val().length==0){
+    if ($("#email").val() == "" || $("#firstName").val() == "" || $("#lastName").val() == "" || $("#setPassword").val() == "" || $("#birthday").val() == "" || $("#hiredate").val() == "" || $("#basic_salary") == "" ||
+        $("#department").val().length == 0) {
         alert("Please fill completely!");
         return;
     }
-    var superior=state.superiors[$("#superior").val()]
+    var superior = state.superiors[$("#superior").val()]
     console.log($("#department").val().length);
     console.log($("#birthday").val());
     var info = {
         email: $("#email").val(),
-        password:$("#setPassword").val().trim(),
+        password: $("#setPassword").val().trim(),
         name: {
             first: $("#firstName").val(),
             last: $("#lastName").val(),
         },
-        rank:$("#rank").val(),
-        superior:superior,
+        rank: $("#rank").val(),
+        superior: superior,
         birth: $("#birthday").val(),
         hiredate: $("#hiredate").val(),
         salary: parseInt($("#basic_salary").val()),
         sex: $("#sex").val(),
-        department:$("#department").val(),
-        status:"true",
+        department: $("#department").val(),
+        status: "true",
     }
-    console.log("hireinfo",info)
+    console.log("hireinfo", info)
     $.ajax({
 
         url: 'api/accounts/' + state.user.id + '/',
         method: 'POST',
-        contentType:'application/json',
+        contentType: 'application/json',
         data: JSON.stringify(info),
         success: function (account) {
-            console.log('acc',account);
+            console.log('acc', account);
             setSalary(account)
             $(".empty").val("");
             $("#superior").empty()
@@ -150,42 +150,35 @@ function hireEmplyee(event) {
     });
 }
 
-function setSalary(account){
-    console.log('accww',account);
+function setSalary(account) {
+    console.log('accww', account);
     $.ajax({
         url: `api/accounts/${state.user.id}/${account.id}/salarys`,
         method: 'POST',
         success: function (ccount) {
-            console.log('setsalary',ccount);
+            console.log('setsalary', ccount);
         }
     });
 }
 
 function search() {
-    var email=$("#searchContent").val().trim();
+    var email = $("#searchContent").val().trim();
     $.ajax({
-        url:'api/accounts'+"/"+email,
+        url: 'api/accounts' + "/" + email,
         method: "GET",
-        success:function(data){
-            if(data){
-                alert ("Find")
-                createUpdateTable(data);
-                console.log(data)
-            }else {
+        success: function (data) {
+            if (data) {
+                updateEmployeeTable(data)
+            } else {
                 alert("No Such guy!")
             }
         },
-        error:function () {
+        error: function () {
 
         }
 
     })
 }
-
-function createUpdateTable(data) {
-$("#searchResults").append('')
-}
-
 
 
 function logout(evt) {
@@ -195,48 +188,71 @@ function logout(evt) {
         success: function () {
             setUser(null);
         },
-        error:function () {
+        error: function () {
             alert('error!!');
         }
     });
 }
-function retrieveEmployee(){
+function retrieveEmployee() {
     $.ajax({
-        url : 'api/accounts',
-        method:'GET',
+        url: 'api/accounts',
+        method: 'GET',
         success: updateEmployeeTable
     });
 }
 
-function updateEmployeeTable(results){
-    var table = $('#account_table').empty();
-    var props = ['id','email', 'name','phone','address'];
-    // make header
-    makeRow( 'th', props ).appendTo( table );
+function updateEmployee() {
 
-    results.forEach( result => {
-        var tr = makeRow( 'td', props.map( p => result[p] ) );
+    state.modal.account.add_salary = parseInt($("#add_salry").val()) - state.modal.account.salary;
+    state.modal.account.rank = $("#rankmodal").val();
+    state.modal.account.promotiondate = $("#promotiondate").val();
+    state.modal.account.superior = $("#superiormodal").val();
+    state.modal.account.department = $("#departmentmodal").val();
+    if ($("#fireDateModal").val() != '') {
+        state.modal.account.firedate = $("#fireDateModal").val();
+    }
+
+    console.log(state.modal.account)
+    $.ajax({
+
+        url: 'api/accounts/' +state.modal.account.id + '/',
+        method: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify(state.modal.account),
+        success: function (account) {
+            alert("update successfully!")
+        }
+    });
+
+}
+
+function updateEmployeeTable(results) {
+    var table = $('#account_table').empty();
+    var props = ['Name', 'Email', 'Rank', 'Department', ''];
+    var props = ['first', 'last', 'email', 'rank', 'department'];
+    // make header
+    makeRow('th', props).appendTo(table);
+
+    results.forEach(result => {
+        var tr = makeRow('td', props.map(p => result[p] ? result[p] : (result.name[p] ? result.name[p] : '' )));
         tr.click((event) => showModal(result));
         tr.appendTo(table);
         result.row = tr;
-    } );
+    });
 }
 
-function showModal(account){
+function showModal(account) {
     state.modal.account = account;
-    if(account) {
-        console.log('accout',account);
+    console.log(account)
+    if (account) {
+        console.log('accout', account);
         $('#emailmodal').text(account.email);
         $('#namemodal').text(account.name.first + " " + account.name.last);
-        $('#titlemodal').text(account.title);
-        $('#phoneModal').val(account.phone);
-        $('#addressModal').val(account.address);
-        $('#basic_salaryModal').val(account.basic_salary);
-        $('#priorityModal').val(account.priority);
+        $('#salarymodal').text(account.salary);
         $('#account_table').slideUp();
         $('#accountModal').slideDown();
         $('#salaryModal').slideDown();
-    }else{
+    } else {
         $('#account_table').slideDown();
         $('#accountModal').slideUp();
         $('#salaryModal').slideUp();
@@ -248,23 +264,23 @@ function cancel() {
 }
 
 
-function updateTable( salary ) {
+function updateTable(salary) {
     var table = $('#table').empty();
-    var props = ['Basic Salary', 'Reward','Deduction','Tax','gross Salary' ];
-    var propOfData=['basic_salary', 'reward','deduction','tax','gross_salary' ];
+    var props = ['Basic Salary', 'Reward', 'Deduction', 'Tax', 'gross Salary'];
+    var propOfData = ['basic_salary', 'reward', 'deduction', 'tax', 'gross_salary'];
 
     // make header
-    makeRow( 'th', props ).appendTo( table );
+    makeRow('th', props).appendTo(table);
 
-    salary.forEach( singleSalary => {
-        var tr = makeRow( 'td', propOfData.map( p => singleSalary[p] ) );
+    salary.forEach(singleSalary => {
+        var tr = makeRow('td', propOfData.map(p => singleSalary[p]));
         tr.appendTo(table);
         singleSalary.row = tr;
-    } );
+    });
 };
 
-function makeRow( type, values ) {
-    return $(`<tr><${type}>` + values.join(`</${type}><${type}>`) + `</${type}></${type}>` );
+function makeRow(type, values) {
+    return $(`<tr><${type}>` + values.join(`</${type}><${type}>`) + `</${type}></${type}>`);
 }
 
 
