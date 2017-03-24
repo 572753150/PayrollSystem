@@ -34,6 +34,11 @@ function save( account, cb ) {
 }
 module.exports.save = save;
 
+function  findManager(cb) {
+    Account.find({status : "true",rank :{$ne : "developer"} }, cb);
+}
+module.exports.findManager = findManager;
+
 function findAll( account, cb ) {
     Account.find({status : "true"}, cb );
 }
@@ -56,7 +61,8 @@ function updateAccount(aid, newAccount, cb){
         }else{
             data.rank = newAccount.rank;
             data.department = newAccount.department;
-            data.salary = data.salary;
+            data.salary = newAccount.salary;
+            data.manager = newAccount.manager;
             if(newAccount.firedate){
                 data.firedate = newAccount.firedate;
                 data.status = "false";

@@ -44,6 +44,7 @@ function getAllSuperior() {
         url: 'api/accounts/manager',
         method: 'GET',
         success: function (users) {
+            console.log("users",users)
             state.superiors=users;
             for(var i=0;i<users.length;i++){
                 $("#superior").append("<option value="+i+" >"+users[i].name.first+" "+users[i].name.last+"</optionva>")
@@ -67,6 +68,8 @@ function setUser(data) {
     $("#showUser").text(data ? data.email : null);
     $("#label_name").text(data ? (data.name.first + " " + data.name.last) : null);
     $("#label_birthday").text(data ? data.birth : null);
+    $("#label_department").text(data?data.department.join("  , "):'');
+    $("#label_superior").text(data?data.superior:'');
 
     retrieveEmployee();
     $.ajax({
@@ -242,8 +245,8 @@ function cancel() {
 
 function updateTable( salary ) {
     var table = $('#table').empty();
-    var props = ['Time','Basic Salary', 'Reward','Deduction','Tax','Final Salary' ];
-    var propOfData=['time','basic_salary', 'reward','deduction','tax','final' ];
+    var props = ['Basic Salary', 'Reward','Deduction','Tax','gross Salary' ];
+    var propOfData=['basic_salary', 'reward','deduction','tax','gross_salary' ];
 
     // make header
     makeRow( 'th', props ).appendTo( table );
@@ -258,8 +261,6 @@ function updateTable( salary ) {
 function makeRow( type, values ) {
     return $(`<tr><${type}>` + values.join(`</${type}><${type}>`) + `</${type}></${type}>` );
 }
-
-
 
 
 

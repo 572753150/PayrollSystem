@@ -52,6 +52,17 @@ router.put('/accounts/:aid/', function (req, res, next) { // 修改指定的acco
     });
 });
 
+router.get('/accounts/manager',function (req, res, next) {
+   accounts.findManager(function (err, users) {
+       //console.log("users",users);
+       if(err){
+           console.log(err);
+       }else{
+           res.json(users);
+       }
+   })
+});
+
 router.get('/accounts/:aid/salarys', function (req, res, next) { // 得到所以的salary
     salarys.findByOwner(req.params.aid, function (err, result) {
         if (err) {

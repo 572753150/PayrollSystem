@@ -15,7 +15,8 @@ var accountSchema = mongoose.Schema( {
     department : mongoose.Schema.Types.Mixed,
     hiredate: String,
     firedate: String,
-    status : String
+    status : String,
+    superior : mongoose.Schema.Types.Mixed
 });
 
 accountSchema.set('toJSON', {
