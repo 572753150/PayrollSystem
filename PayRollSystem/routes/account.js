@@ -3,16 +3,18 @@ var Account = require('./accountModel');
 function init( cb ) {
     var saved = 0;
     var result = [];
-    const accountDb = [["bilbo", "baggins"], ["frodo", "baggins"], ["samwise", "gamgee"]].forEach( (names,index) => {
+    const accountDb = [["bilbo", "baggins","admin",["Market","IT","Service"]], ["frodo", "baggins","manager",["Market","IT","Service"]], ["samwise", "gamgee","developer",["Market","IT","Service"]]].forEach( (names,index) => {
         var account = new Account( {
             name : { first : names[0], last : names[1] },
             password : "123",
+            sex : "male",
+            rank : names[2],
+            birth : "1976/1/2",
             email : names[0] + "@mordor.org",
-            phone : 1234567890,
-            address : "123wer",
-            basic_salary : 8000,
-            priority : index + 1,
-            enabled : true
+            salary : 8000,
+            department : names[3],
+            hiredate: "1997/12/13",
+            status : "true"
         } );
         account.save( function(err, savedAccount ) {
             result.push( savedAccount );
@@ -33,7 +35,7 @@ function save( account, cb ) {
 module.exports.save = save;
 
 function findAll( account, cb ) {
-    Account.find( {priority : {$lt: account.priority}}, cb );
+    Account.find({status : "true"}, cb );
 }
 module.exports.findAll = findAll;
 
@@ -47,12 +49,20 @@ function findByEmail( email, cb ) {
 }
 module.exports.findByEmail = findByEmail;
 
-function updateAccount(id, newAccount, cb){
-    Account.findById(id, function (err, account){
-       if(err){cb(err, null)}
-       else{
-           delete newAccount.id;
-           Account.update({_id:account.id},{$set:newAccount},cb);
+function updateAccount(aid, newAccount, cb){
+    Account.findOne({'_id' : aid},function (err, data) {
+        if(err){
+            cb(err, null);
+        }else{
+            data.rank = newAccount.rank;
+            data.department = newAccount.department;
+            data.salary = data.salary;
+            if(newAccount.firedate){
+                data.firedate = newAccount.firedate;
+                data.status = "false";
+            }
         }
-    });
+    })
+
 }
+module.exports.updateAccount = updateAccount;

@@ -12,11 +12,8 @@ var salarySchema = mongoose.Schema({
         default:0
     },
     tax : Number,
-    final : Number,
-    time : {
-        type : Date,
-        default:Date.now
-    }
+    gross_salary : Number,
+    status : String
 });
 
 salarySchema.set('toJSON', {

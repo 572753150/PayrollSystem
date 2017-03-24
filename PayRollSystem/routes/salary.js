@@ -2,7 +2,6 @@ var Salary = require('./salaryModel');
 
 function create( ownerId, newsalary, cb ) {
     newsalary.owner = ownerId;
-    //newsalary.begin = Date.now();
     new Salary( newsalary ).save( cb );
 };
 module.exports.create = create;

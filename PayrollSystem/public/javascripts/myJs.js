@@ -42,14 +42,14 @@ function setUser(data) {
 
     state.user = data;
     setPage(data ? 'content' : 'login')
-    console.log(data)
-    if (data.priority == 1) {
+    //console.log(data)
+    if (data.rank == "developer") {
         $("#hireTab").hide();
         $("#updateTab").hide();
     }
     $("#showUser").text(data ? data.email : null);
     $("#label_name").text(data ? (data.name.first + " " + data.name.last) : null);
-    $("#label_birthday").text(data ? data.phone : null);
+    $("#label_birthday").text(data ? data.birth : null);
     retrieveEmployee();
     $.ajax({
         url:"api/accounts/"+state.user.id+"/salarys",
@@ -107,19 +107,19 @@ function hireEmplyee(event) {
         sex: $("#sex").val(),
         department:$("#department").val()
     }
-    console.log(info)
-    // $.ajax({
-    //
-    //     url: 'api/accounts/' + state.user.id + '/',
-    //     method: 'POST',
-    //     contentType:'application/json',
-    //     data: JSON.stringify(info),
-    //     success: function (account) {
-    //         console.log('acc',account);
-    //         setSalary(account)
-    //         alert("Hire successfully!")
-    //     }
-    // });
+    console.log("hireinfo",info)
+    $.ajax({
+
+        url: 'api/accounts/' + state.user.id + '/',
+        method: 'POST',
+        contentType:'application/json',
+        data: JSON.stringify(info),
+        success: function (account) {
+            console.log('acc',account);
+            setSalary(account)
+            alert("Hire successfully!")
+        }
+    });
 }
 
 function setSalary(account){

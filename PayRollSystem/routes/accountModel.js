@@ -5,28 +5,17 @@ var accountSchema = mongoose.Schema( {
     name : {
         first : String, last : String
     },
-
+    rank : String,
+    sex : String,
+    birth : String,
     email : String,
-
     password : String,
-
-    enabled : Boolean,
-
-    priority : Number,
-
-    address: String,
-
-    phone : Number,
-
-    title : String,
-
-    basic_salary: Number,
-
-    hiredate: {
-        type : Date,
-        default:Date.now
-    },
-    firedate: Date
+    department : String,
+    salary: Number,//anual salary
+    department : mongoose.Schema.Types.Mixed,
+    hiredate: String,
+    firedate: String,
+    status : String
 });
 
 accountSchema.set('toJSON', {

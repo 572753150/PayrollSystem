@@ -13,7 +13,7 @@ router.post('/login', function (req, res, next) {
         users.findByEmail(req.body.username, function (err, account) {
             if (account && account.password == req.body.password) {
                 req.session.user = account;
-                delete account.password;
+                account.password = "";
                 res.json(account);
             } else {
                 res.json(400,{msg:'Error with username/password or status'});

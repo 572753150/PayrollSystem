@@ -21,7 +21,6 @@ router.all('/accounts/:aid/*', function (req, res, next) { // 验证用户的合
 
 router.post('/accounts/:aid/', function (req, res, next) { // 添加一个用户
     var authenticatedAccount = req.session.user;
-    if (authenticatedAccount.priority > 1) {
         var newaccount = req.body;
         accounts.save(newaccount, function (err, result) {
             if (err) {
@@ -30,7 +29,6 @@ router.post('/accounts/:aid/', function (req, res, next) { // 添加一个用户
                 res.json(result);
             }
         });
-    }
 });
 
 router.get('/accounts', function (req, res, next) {   // 列出可管理所有的account数目
@@ -44,8 +42,8 @@ router.get('/accounts', function (req, res, next) {   // 列出可管理所有�
     });
 });
 
-router.put('/accounts/:aid/:uid', function (req, res, next) { // 修改指定的account
-    salary.update(req.params.uid, req.body, function (err, thing) {
+router.put('/accounts/:aid/', function (req, res, next) { // 修改指定的account
+    accounts.updateAccount(req.params.uid, req.body, function (err, thing) {
         if (err) {
             res.status(403).json({msg: err});
         } else {
@@ -54,8 +52,7 @@ router.put('/accounts/:aid/:uid', function (req, res, next) { // 修改指定的
     });
 });
 
-router.get('/accounts/:aid/salarys', function (req, res, next) {
-    // 得到所以的salary
+router.get('/accounts/:aid/salarys', function (req, res, next) { // 得到所以的salary
     salarys.findByOwner(req.params.aid, function (err, result) {
         if (err) {
             res.json({msg: err});
@@ -67,7 +64,7 @@ router.get('/accounts/:aid/salarys', function (req, res, next) {
 
 
 
-router.get('/accounts/:email', function (req, res, next) {
+router.get('/accounts/:email', function (req, res, next) { //通过email找数据
         var email = req.params.email;
         accounts.findByEmail(email, function (error, result) {
             if (error) {
@@ -90,12 +87,15 @@ router.get('/accounts/:aid/salarys/:sid', function (req, res, next) {  //得到�
     });
 });
 
-router.post('/accounts/:aid/:uid/salarys', function (req, res, next) { // 创建一个新的salary
+router.post('/accounts/:aid/:uid/salarys', function (req, res, next) { // 创建一个新的salarys
     accounts.findById(req.params.uid, function (err, result) {
         if (err) res.status(500).send({'msg': 'Error no such account!'})
         else {
-            var newsalary = req.body || {};
-            newsalary.basic_salary = result.basic_salary;
+            var hiredate = result.hiredate;
+            var begin = Date.parse(new Date(hiredate));
+
+            var newsalary = {};
+            newsalary.basic_salary = result.salary / 12;
             newsalary.tax  = result.basic_salary * 0.055;
             newsalary.final  = result.basic_salary - newsalary.tax;
             salarys.create(req.params.uid, newsalary, function (err, thing) {
