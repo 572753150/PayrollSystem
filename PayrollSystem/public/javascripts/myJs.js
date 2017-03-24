@@ -69,7 +69,7 @@ function setUser(data) {
     $("#label_name").text(data ? (data.name.first + " " + data.name.last) : null);
     $("#label_birthday").text(data ? data.birth : null);
     $("#label_department").text(data?data.department.join("  , "):'');
-    $("#label_superior").text(data?data.superior:'');
+    $("#label_superior").text(data.superior?(data.superior.name.last+" "+data.superior.name.last):'');
 
     retrieveEmployee();
     $.ajax({
@@ -123,12 +123,14 @@ function hireEmplyee(event) {
             first: $("#firstName").val(),
             last: $("#lastName").val(),
         },
+        rank:$("#rank").val(),
         superior:superior,
-        birthday: $("#birthday").val(),
+        birth: $("#birthday").val(),
         hiredate: $("#hiredate").val(),
         salary: parseInt($("#basic_salary").val()),
         sex: $("#sex").val(),
-        department:$("#department").val()
+        department:$("#department").val(),
+        status:"true",
     }
     console.log("hireinfo",info)
     $.ajax({
@@ -140,6 +142,9 @@ function hireEmplyee(event) {
         success: function (account) {
             console.log('acc',account);
             setSalary(account)
+            $(".empty").val("");
+            $("#superior").empty()
+            getAllSuperior();
             alert("Hire successfully!")
         }
     });
