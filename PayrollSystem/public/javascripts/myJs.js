@@ -1,7 +1,8 @@
 var state = {
     modal : {account : null},
     user: null,
-    page: {pages: ["login", "content", "accountModal", "salaryModal"], page: null}
+    page: {pages: ["login", "content", "accountModal", "salaryModal"], page: null},
+    superiors:[]
 }
 
 function setPage(page) {
@@ -38,6 +39,19 @@ $(document).ready(function () {
     });
 })
 
+function getAllSuperior() {
+    $.ajax({
+        url: 'api/accounts/manager',
+        method: 'GET',
+        success: function (users) {
+            state.superiors=users;
+            for(var i=0;i<users.length;i++){
+                $("#superior").append("<option value="+i+" >"+users[i].name.first+" "+users[i].name.last+"</optionva>")
+            }
+        },
+    });
+}
+
 function setUser(data) {
 
     state.user = data;
@@ -46,10 +60,14 @@ function setUser(data) {
     if (data.rank == "developer") {
         $("#hireTab").hide();
         $("#updateTab").hide();
+    }else {
+        $("#superior").empty();
+        getAllSuperior();
     }
     $("#showUser").text(data ? data.email : null);
     $("#label_name").text(data ? (data.name.first + " " + data.name.last) : null);
     $("#label_birthday").text(data ? data.birth : null);
+
     retrieveEmployee();
     $.ajax({
         url:"api/accounts/"+state.user.id+"/salarys",
@@ -92,6 +110,7 @@ function hireEmplyee(event) {
         alert("Please fill completely!");
         return;
     }
+    var superior=state.superiors[$("#superior").val()]
     console.log($("#department").val().length);
     console.log($("#birthday").val());
     var info = {
@@ -101,6 +120,7 @@ function hireEmplyee(event) {
             first: $("#firstName").val(),
             last: $("#lastName").val(),
         },
+        superior:superior,
         birthday: $("#birthday").val(),
         hiredate: $("#hiredate").val(),
         salary: parseInt($("#basic_salary").val()),
