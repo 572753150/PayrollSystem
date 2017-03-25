@@ -22,6 +22,7 @@ router.all('/accounts/:aid/*', function (req, res, next) { // 验证用户的合
 router.post('/accounts/:aid/', function (req, res, next) { // 添加一个用户
     var authenticatedAccount = req.session.user;
         var newaccount = req.body;
+        //console.log(newaccount);
         accounts.save(newaccount, function (err, result) {
             if (err) {
                 res.status(500).json(err);
@@ -42,8 +43,8 @@ router.get('/accounts', function (req, res, next) {   // 列出可管理所有�
     });
 });
 
-router.put('/accounts/:aid/', function (req, res, next) { // 修改指定的account
-    accounts.updateAccount(req.params.uid, req.body, function (err, thing) {
+router.put('/accounts/:aid/', function (req, res, next) { // +++++修改指定的account
+    accounts.updateAccount(req.params.aid, req.body, function (err, thing) {
         if (err) {
             res.status(403).json({msg: err});
         } else {
@@ -52,7 +53,7 @@ router.put('/accounts/:aid/', function (req, res, next) { // 修改指定的acco
     });
 });
 
-router.get('/accounts/manager',function (req, res, next) {
+router.get('/accounts/manager',function (req, res, next) { // ++ 得到managers
    accounts.findManager(function (err, users) {
        //console.log("users",users);
        if(err){
@@ -75,9 +76,11 @@ router.get('/accounts/:aid/salarys', function (req, res, next) { // 得到所以
 
 
 
-router.get('/accounts/:email', function (req, res, next) { //通过email找数据
+router.get('/accounts/:email', function (req, res, next) { // ++++通过email找数据
         var email = req.params.email;
-        accounts.findByEmail(email, function (error, result) {
+        console.log("email",email);
+        accounts.findByCondition(email, function (error, result) {
+            console.log("researchUser",result);
             if (error) {
                 res.status(500).json(error);
             } else {
@@ -88,7 +91,7 @@ router.get('/accounts/:email', function (req, res, next) { //通过email找数�
 )
 
 
-router.get('/accounts/:aid/salarys/:sid', function (req, res, next) {  //得到指定的salary
+router.get('/accounts/:aid/salarys/:sid', function (req, res, next) {  //++++++得到指定的salary
     salarys.find(req.params.aid, req.params.sid, function (err, thing) {
         if (thing) {
             res.json(result);
@@ -98,26 +101,36 @@ router.get('/accounts/:aid/salarys/:sid', function (req, res, next) {  //得到�
     });
 });
 
-router.post('/accounts/:aid/:uid/salarys', function (req, res, next) { // 创建一个新的salarys
+router.post('/accounts/:aid/salarys', function (req, res, next) { // +++创建一个新的salary或者返回新的salary
+    var time = req.body.reseachdate;
     accounts.findById(req.params.uid, function (err, result) {
         if (err) res.status(500).send({'msg': 'Error no such account!'})
         else {
-            var hiredate = result.hiredate;
-            var begin = Date.parse(new Date(hiredate));
-
-            var newsalary = {};
-            newsalary.basic_salary = result.salary / 12;
-            newsalary.tax  = result.basic_salary * 0.055;
-            newsalary.final  = result.basic_salary - newsalary.tax;
-            salarys.create(req.params.uid, newsalary, function (err, thing) {
-                if (err) {
-                    res.status(500).send({'msg': 'Error creating thing'});
-                } else {
-                    res.send(thing);
+            salarys.findByOwnerandTime(req.params.uid, time, function (err, data) {
+                if(data){
+                    res.send(data);
+                }else{
+                    var newsalary = {};
+                    newsalary.date = time;
+                    if(result.promotiondate){
+                        newsalary.gross_salary = (result.salary + result.add_salary) / 12;
+                    }else{
+                        newsalary.gross_salary = result.salary / 12;
+                    }
+                    newsalary.deduction = newsalary.gross_salary * 0.25;
+                    newsalary.reward = newsalary.gross_salary * 0.15;
+                    newsalary.tax = (newsalary.gross_salary - newsalary.deduction + newsalary.reward) * 0.055;
+                    newsalary.net_salary = (newsalary.gross_salary - newsalary.deduction + newsalary.reward) * 9.945;
+                    salarys.create(req.params.uid, newsalary, function (err, salary) {
+                        if (err) {
+                            res.status(500).send({'msg': 'Error creating salary'});
+                        } else {
+                            res.send(salary);
+                        }
+                    });
                 }
             });
         }
-
     })
 });
 

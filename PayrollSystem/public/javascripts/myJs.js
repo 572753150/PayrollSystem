@@ -167,6 +167,7 @@ function search() {
         url: 'api/accounts' + "/" + email,
         method: "GET",
         success: function (data) {
+            console.log("researchUser",data);
             if (data) {
                 updateEmployeeTable(data)
             } else {
@@ -206,7 +207,7 @@ function updateEmployee() {
     state.modal.account.add_salary = parseInt($("#add_salry").val()) - state.modal.account.salary;
     state.modal.account.rank = $("#rankmodal").val();
     state.modal.account.promotiondate = $("#promotiondate").val();
-    state.modal.account.superior = $("#superiormodal").val();
+    state.modal.account.superior =state.superiors[ parseInt($("#superiormodal").val())];
     state.modal.account.department = $("#departmentmodal").val();
     if ($("#fireDateModal").val() != '') {
         state.modal.account.firedate = $("#fireDateModal").val();
@@ -220,7 +221,11 @@ function updateEmployee() {
         contentType: 'application/json',
         data: JSON.stringify(state.modal.account),
         success: function (account) {
-            alert("update successfully!")
+
+
+            alert("update successfully!");
+            showModal(null);
+            retrieveEmployee()
         }
     });
 

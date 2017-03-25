@@ -24,13 +24,15 @@ function init( cb ) {
 };
 module.exports.init = init;
 
-/*
- * accountDb is an object having
- * account.email as keys
- * and account objects as values
- */
 function save( account, cb ) {
-    new Account(account).save( cb );
+    Account.findOne({'email' : account.email}, function (err, account) {
+        if(account){
+            cb({msg : "already have one!!"}, null);
+        }else{
+            new Account(account).save( cb );
+        }
+    })
+
 }
 module.exports.save = save;
 
@@ -54,19 +56,29 @@ function findByEmail( email, cb ) {
 }
 module.exports.findByEmail = findByEmail;
 
+function findByCondition( email, cb ) {
+    Account.find( { 'email' : email }, cb );
+}
+module.exports.findByCondition = findByCondition;
 function updateAccount(aid, newAccount, cb){
+    console.log("newacount",newAccount)
     Account.findOne({'_id' : aid},function (err, data) {
+        console.log("account_date", data);
         if(err){
             cb(err, null);
         }else{
             data.rank = newAccount.rank;
             data.department = newAccount.department;
             data.salary = newAccount.salary;
+            data.add_salary = newAccount.add_salary;
+            data.superior = newAccount.superior;
             data.manager = newAccount.manager;
+            data.promotiondate = newAccount.promotiondate;
             if(newAccount.firedate){
                 data.firedate = newAccount.firedate;
                 data.status = "false";
             }
+            data.save(cb);
         }
     })
 

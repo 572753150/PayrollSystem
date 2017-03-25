@@ -12,8 +12,13 @@ var accountSchema = mongoose.Schema( {
     password : String,
     department : String,
     salary: Number,//anual salary
+    add_salary : {
+        type : Number,
+        default : 0
+    },
     department : mongoose.Schema.Types.Mixed,
     hiredate: String,
+    promotiondate : String,
     firedate: String,
     status : String,
     superior : mongoose.Schema.Types.Mixed

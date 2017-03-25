@@ -12,7 +12,7 @@ function findById( Sid, cb ) {
 module.exports.find = findById;
 
 function findByOwner( aid, cb ) {
-    var query = { "owner" : aid };
+    var query = { owner : aid };
     //
     // if( filter ) {
     //     var containsRegEx = ".*"+ filter + ".*";
@@ -29,6 +29,11 @@ function findByOwner( aid, cb ) {
     Salary.find( query, cb );
 };
 module.exports.findByOwner = findByOwner;
+
+function findByOwnerandTime( aid, time,  cb ) {
+    Salary.findOne({owner: aid, date : time}, cb);
+}
+module.exports.findByOwnerandTime = findByOwnerandTime;
 
 function update( aid, Sid, object, cb ) {
     Salary.findOne( { owner : aid, '_id' : Sid }, function(err, salary ) {

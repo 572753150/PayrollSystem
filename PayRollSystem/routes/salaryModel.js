@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var salarySchema = mongoose.Schema({
     owner : mongoose.Schema.ObjectId,
-    basic_salary: Number,
+    gross_salary: Number,
     deduction : {
         type : Number,
         default:0
@@ -12,8 +12,9 @@ var salarySchema = mongoose.Schema({
         default:0
     },
     tax : Number,
-    gross_salary : Number,
-    status : String
+    net_salary : Number,
+    date : String
+    //status : String
 });
 
 salarySchema.set('toJSON', {
