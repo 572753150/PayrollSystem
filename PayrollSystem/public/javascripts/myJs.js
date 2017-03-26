@@ -8,7 +8,7 @@ var state = {
 var rankObj={
     admin:{
         max:200000,
-        min:120000
+        min:100000
     },
     developer:{
         max:120000,
@@ -16,7 +16,7 @@ var rankObj={
     },
     manager:{
         max:160000,
-        min:100000
+        min:90000
     }
 
 }
@@ -94,17 +94,17 @@ function setUser(data) {
     $("#label_birthday").text(data ? data.birth : null);
     $("#label_rank").text(data?data.rank:"")
     $("#label_department").text(data ? data.department.join("  , ") : '');
-    $("#label_superior").text(data.superior ? (data.superior.name.last + " " + data.superior.name.last) : '');
+    $("#label_superior").text(data.superior ? (data.superior.name.first + " " + data.superior.name.last) : '');
 
     retrieveEmployee();
-    $.ajax({
-        url: "api/accounts/" + state.user.id + "/salarys",
-        method: "GET",
-        success: function (data) {
-            console.log(data)
-            //updateTable(data);
-        }
-    })
+    // $.ajax({
+    //     url: "api/accounts/" + state.user.id + "/salarys",
+    //     method: "GET",
+    //     success: function (data) {
+    //         console.log(data)
+    //         //updateTable(data);
+    //     }
+    // })
 }
 
 function login(evt) {
@@ -113,14 +113,20 @@ function login(evt) {
     var password = $('#password').val();
     $('#username').val('');
     $('#password').val('');
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (username != '' && password != '' && re.test(username)) {
+    //var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (username != '' && password != '') {
         $.ajax({
             url: '/login',
             method: 'POST',
             data: {"username": username, "password": password},
             success: function (data) {
-                setUser(data)
+                console.log("logindata",data);
+                if(data.msg){
+                    alert(data.msg);
+                }else{
+                    setUser(data)
+                }
+
             },
             error: function () {
                 alert(" invalid username or password!aaa")
@@ -171,7 +177,8 @@ function hireEmplyee(event) {
         data: JSON.stringify(info),
         success: function (account) {
             console.log('acc', account);
-            setSalary(account)
+            retrieveEmployee();
+            //setSalary(account)
             $(".empty").val("");
             $("#superior").empty()
             getAllSuperior();
@@ -289,6 +296,7 @@ function showModal(account) {
         $('#emailmodal').text(account.email);
         $('#namemodal').text(account.name.first + " " + account.name.last);
         $('#salarymodal').text(account.salary);
+        $('#add_salry').val(account.salary)
         $('#account_table').slideUp();
         $('#accountModal').slideDown();
         $('#salaryModal').slideDown();

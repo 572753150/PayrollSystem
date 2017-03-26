@@ -22,7 +22,7 @@ router.all('/accounts/:aid/*', function (req, res, next) { // 验证用户的合
 router.post('/accounts/:aid/', function (req, res, next) { // 添加一个用户
     var authenticatedAccount = req.session.user;
         var newaccount = req.body;
-        //console.log(newaccount);
+        console.log("createNewAccount",newaccount);
         accounts.save(newaccount, function (err, result) {
             if (err) {
                 res.status(500).json(err);

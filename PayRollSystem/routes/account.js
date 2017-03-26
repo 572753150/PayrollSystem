@@ -11,7 +11,7 @@ function init( cb ) {
             rank : names[2],
             birth : "1976/1/2",
             email : names[0] + "@mordor.org",
-            salary : 8000,
+            salary : 100000,
             department : names[3],
             hiredate: "1997/12/13",
             status : "true"
@@ -24,12 +24,13 @@ function init( cb ) {
 };
 module.exports.init = init;
 
-function save( account, cb ) {
-    Account.findOne({'email' : account.email}, function (err, account) {
+function save( newaccount, cb ) {
+    Account.findOne({'email' : newaccount.email}, function (err, account) {
         if(account){
             cb({msg : "already have one!!"}, null);
         }else{
-            new Account(account).save( cb );
+            console.log("******new-account",newaccount);
+            new Account(newaccount).save( cb );
         }
     })
 
