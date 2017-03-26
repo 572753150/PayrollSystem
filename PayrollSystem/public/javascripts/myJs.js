@@ -6,15 +6,15 @@ var state = {
 }
 
 var rankObj={
-    Admin:{
+    admin:{
         max:200000,
         min:120000
     },
-    Developer:{
+    developer:{
         max:120000,
         min:80000
     },
-    Manager:{
+    manager:{
         max:160000,
         min:100000
     }
@@ -241,6 +241,11 @@ function updateEmployee() {
     state.modal.account.department = $("#departmentmodal").val();
     if ($("#fireDateModal").val() != '') {
         state.modal.account.firedate = $("#fireDateModal").val();
+    }
+    if(judgesalary($("#rankmodal").val(),$("#add_salry").val())){
+    }else {
+        alert("Salary is not correct! Too Low or Too High!")
+        return
     }
 
     console.log(state.modal.account)
