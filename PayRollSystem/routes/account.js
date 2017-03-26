@@ -42,7 +42,7 @@ function  findManager(cb) {
 module.exports.findManager = findManager;
 
 function findAll( account, cb ) {
-    Account.find({status : "true"}, cb );
+    Account.find({status : "true",'_id' :{$ne : account.id} }, cb );
 }
 module.exports.findAll = findAll;
 
@@ -60,6 +60,7 @@ function findByCondition( email, cb ) {
     Account.find( { 'email' : email }, cb );
 }
 module.exports.findByCondition = findByCondition;
+
 function updateAccount(aid, newAccount, cb){
     console.log("newacount",newAccount)
     Account.findOne({'_id' : aid},function (err, data) {

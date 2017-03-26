@@ -77,7 +77,7 @@ function setUser(data) {
         method: "GET",
         success: function (data) {
             console.log(data)
-            updateTable(data);
+            //updateTable(data);
         }
     })
 }
@@ -286,6 +286,17 @@ function updateTable(salary) {
 
 function makeRow(type, values) {
     return $(`<tr><${type}>` + values.join(`</${type}><${type}>`) + `</${type}></${type}>`);
+}
+
+function searchSalary() {
+    var time = $('#salryDateForSewarch').val();
+    console.log('wantedSalaryDate',time);
+    $.ajax({
+        url : 'api/accounts/'+state.user.id+'/salarys',
+        method : 'POST',
+        data : {reseachdate : time},
+        success : updateTable
+    });
 }
 
 

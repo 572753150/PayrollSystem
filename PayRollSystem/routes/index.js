@@ -103,10 +103,12 @@ router.get('/accounts/:aid/salarys/:sid', function (req, res, next) {  //++++++�
 
 router.post('/accounts/:aid/salarys', function (req, res, next) { // +++创建一个新的salary或者返回新的salary
     var time = req.body.reseachdate;
-    accounts.findById(req.params.uid, function (err, result) {
+    console.log("wantedTime",time);
+    accounts.findById(req.params.aid, function (err, result) {
+        console.log('findUser',result);
         if (err) res.status(500).send({'msg': 'Error no such account!'})
         else {
-            salarys.findByOwnerandTime(req.params.uid, time, function (err, data) {
+            salarys.findByOwnerandTime(req.params.aid, time, function (err, data) {
                 if(data){
                     res.send(data);
                 }else{
@@ -121,11 +123,12 @@ router.post('/accounts/:aid/salarys', function (req, res, next) { // +++创建�
                     newsalary.reward = newsalary.gross_salary * 0.15;
                     newsalary.tax = (newsalary.gross_salary - newsalary.deduction + newsalary.reward) * 0.055;
                     newsalary.net_salary = (newsalary.gross_salary - newsalary.deduction + newsalary.reward) * 9.945;
-                    salarys.create(req.params.uid, newsalary, function (err, salary) {
+                    console.log("createSalary",newsalary);
+                    salarys.create(req.params.aid, newsalary, function (err, salary) {
                         if (err) {
                             res.status(500).send({'msg': 'Error creating salary'});
                         } else {
-                            res.send(salary);
+                            res.send([salary]);
                         }
                     });
                 }
