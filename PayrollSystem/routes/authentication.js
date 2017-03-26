@@ -14,7 +14,12 @@ router.post('/login', function (req, res, next) {
             if (account && account.password == req.body.password) {
                 req.session.user = account;
                 account.password = "";
-                res.json(account);
+                if(account.status == "false"){
+                    res.json({msg:"have no such user!!!"});
+                }else{
+                    res.json(account);
+                }
+
             } else {
                 res.json(400,{msg:'Error with username/password or status'});
             }

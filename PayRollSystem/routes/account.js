@@ -42,7 +42,13 @@ function  findManager(cb) {
 module.exports.findManager = findManager;
 
 function findAll( account, cb ) {
-    Account.find({status : "true",'_id' :{$ne : account.id} }, cb );
+    if(account.rank == "admin"){
+        Account.find({status : "true",'_id' :{$ne : account.id} }, cb );
+    }
+    if(account.rank == "manager"){
+        Account.find({status : "true",'_id' :{$ne : account.id}, rank : {$ne : "admin"} }, cb );
+    }
+
 }
 module.exports.findAll = findAll;
 
