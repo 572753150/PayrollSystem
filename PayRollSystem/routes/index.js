@@ -110,11 +110,11 @@ router.post('/accounts/:aid/salarys', function (req, res, next) { // +++创建�
         else {
             salarys.findByOwnerandTime(req.params.aid, time, function (err, data) {
                 if(data){
-                    res.send(data);
+                    res.send([data]);
                 }else{
                     var newsalary = {};
                     newsalary.date = time;
-                    if(result.promotiondate){
+                    if(result.promotiondate && compareTime(time, result.promotiondate)){
                         newsalary.gross_salary = (result.salary + result.add_salary) / 12;
                     }else{
                         newsalary.gross_salary = result.salary / 12;
@@ -122,7 +122,7 @@ router.post('/accounts/:aid/salarys', function (req, res, next) { // +++创建�
                     newsalary.deduction = newsalary.gross_salary * 0.25;
                     newsalary.reward = newsalary.gross_salary * 0.15;
                     newsalary.tax = (newsalary.gross_salary - newsalary.deduction + newsalary.reward) * 0.055;
-                    newsalary.net_salary = (newsalary.gross_salary - newsalary.deduction + newsalary.reward) * 9.945;
+                    newsalary.net_salary = (newsalary.gross_salary - newsalary.deduction + newsalary.reward) * 0.945;
                     console.log("createSalary",newsalary);
                     salarys.create(req.params.aid, newsalary, function (err, salary) {
                         if (err) {
@@ -136,6 +136,9 @@ router.post('/accounts/:aid/salarys', function (req, res, next) { // +++创建�
         }
     })
 });
+function compareTime(now, pre){
+    return new Date(now) >= new Date(pre);
+}
 
 router.put('/accounts/:aid/salarys/:sid', function (req, res, next) { // 修改指定的salary
     salarys.update(req.params.aid, req.params.sid, req.body, function (err, thing) {

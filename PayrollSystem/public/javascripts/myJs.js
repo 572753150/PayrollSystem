@@ -271,14 +271,14 @@ function cancel() {
 
 function updateTable(salary) {
     var table = $('#table').empty();
-    var props = ['Basic Salary', 'Reward', 'Deduction', 'Tax', 'gross Salary'];
-    var propOfData = ['basic_salary', 'reward', 'deduction', 'tax', 'gross_salary'];
+    var props = ['Gross Salary', 'Reward', 'Deduction', 'Tax', 'Net Salary'];
+    var propOfData = ['gross_salary', 'reward', 'deduction', 'tax', 'net_salary'];
 
     // make header
     makeRow('th', props).appendTo(table);
-
+    console.log("salary",salary);
     salary.forEach(singleSalary => {
-        var tr = makeRow('td', propOfData.map(p => singleSalary[p]));
+        var tr = makeRow('td', propOfData.map(p => singleSalary[p].toFixed(2)));
         tr.appendTo(table);
         singleSalary.row = tr;
     });
@@ -291,12 +291,21 @@ function makeRow(type, values) {
 function searchSalary() {
     var time = $('#salryDateForSewarch').val();
     console.log('wantedSalaryDate',time);
-    $.ajax({
-        url : 'api/accounts/'+state.user.id+'/salarys',
-        method : 'POST',
-        data : {reseachdate : time},
-        success : updateTable
-    });
+    if(compareTime(time, state.user.hiredate)){
+        $.ajax({
+            url : 'api/accounts/'+state.user.id+'/salarys',
+            method : 'POST',
+            data : {reseachdate : time},
+            success : updateTable
+        });
+    }else{
+        alert("you hav not hired!!!");
+    }
+
+}
+
+function compareTime(now, pre){
+    return new Date(now) >= new Date(pre);
 }
 
 
