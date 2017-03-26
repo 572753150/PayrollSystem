@@ -5,6 +5,30 @@ var state = {
     superiors: []
 }
 
+var rankObj={
+    Admin:{
+        max:200000,
+        min:120000
+    },
+    Developer:{
+        max:120000,
+        min:80000
+    },
+    Manager:{
+        max:160000,
+        min:100000
+    }
+
+}
+
+function judgesalary(rank, sarlary) {
+    if(sarlary<=rankObj[rank].max&&sarlary>=rankObj[rank].min){
+        return true
+    }else {
+        return false
+    }
+}
+
 function setPage(page) {
     state.page.page = page;
     if (page == "login") {
@@ -68,6 +92,7 @@ function setUser(data) {
     $("#showUser").text(data ? data.email : null);
     $("#label_name").text(data ? (data.name.first + " " + data.name.last) : null);
     $("#label_birthday").text(data ? data.birth : null);
+    $("#label_rank").text(data?data.rank:"")
     $("#label_department").text(data ? data.department.join("  , ") : '');
     $("#label_superior").text(data.superior ? (data.superior.name.last + " " + data.superior.name.last) : '');
 
@@ -112,6 +137,11 @@ function hireEmplyee(event) {
         $("#department").val().length == 0) {
         alert("Please fill completely!");
         return;
+    }
+    if(judgesalary($("#rank").val(),$("#basic_salary").val())){
+    }else {
+        alert("Salary is not correct! Too Low or Too High!")
+        return
     }
     var superior = state.superiors[$("#superior").val()]
     console.log($("#department").val().length);
