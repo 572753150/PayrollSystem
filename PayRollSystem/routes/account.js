@@ -1,5 +1,5 @@
 var Account = require('./accountModel');
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcrypt-nodejs');
 
 function init( cb ) {
     var saved = 0;

@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var users = require('./account.js');
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcrypt-nodejs');
 
 router.post('/logout', function (req, res, next) {
     req.session.regenerate(function (err) { // create a new session id
