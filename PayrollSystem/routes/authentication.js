@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var users = require('./account.js');
+var bcrypt = require('bcrypt');
 
 router.post('/logout', function (req, res, next) {
     req.session.regenerate(function (err) { // create a new session id
@@ -11,7 +12,7 @@ router.post('/logout', function (req, res, next) {
 router.post('/login', function (req, res, next) {
     req.session.regenerate(function (err) {
         users.findByEmail(req.body.username, function (err, account) {
-            if (account && account.password == req.body.password) {
+            if (account && bcrypt.compareSync(req.body.password, account.password)) {
                 req.session.user = account;
                 account.password = "";
                 if(account.status == "false"){

@@ -1,4 +1,5 @@
 var Account = require('./accountModel');
+var bcrypt = require('bcrypt');
 
 function init( cb ) {
     var saved = 0;
@@ -6,7 +7,7 @@ function init( cb ) {
     const accountDb = [["bilbo", "baggins","admin",["Market","IT","Service"]], ["frodo", "baggins","manager",["Market","IT","Service"]], ["samwise", "gamgee","developer",["Market","IT","Service"]]].forEach( (names,index) => {
         var account = new Account( {
             name : { first : names[0], last : names[1] },
-            password : "123",
+            password : bcrypt.hashSync("123"),
             sex : "male",
             rank : names[2],
             birth : "1976/1/2",

@@ -254,6 +254,7 @@ function updateEmployee() {
         alert("Salary is not correct! Too Low or Too High!")
         return
     }
+    $("#fireDateModal").val('');
 
     console.log(state.modal.account)
     $.ajax({
