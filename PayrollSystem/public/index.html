@@ -426,15 +426,18 @@
                         <div class="form-inline">
                             <select id="optionOfProject">
                             </select>
-                            <input type="date" class="form-control ">
+                            <input type="date" id="dateForCost" class="form-control ">
 
-                            <button type="submit" class="btn btn-primary  pull-right" onclick="">
+                            <button type="submit" class="btn btn-primary  pull-right" onclick="searchCost()">
                                 Search
                             </button>
                         </div>
                         <table id="cost" class="table table-condensed "></table>
                     </div>
 
+                    <div>
+                        <span id="displayCost" style="display: none"></span>
+                    </div>
                 </div>
 
             </div>

@@ -388,7 +388,7 @@ function getProjects() {
             var propOfData = ['name', 'start', 'end', 'department'];
             data.forEach(project => {
                 var tr = makeRow('td', propOfData.map(p => project[p]));
-                var option="<option value='"+project.id+"'>"+project.name+"</option>"
+                var option = "<option value='" + project.id + "'>" + project.name + "</option>"
                 console.log(project);
                 tr.click((event) => showProject(project));
                 $("#tableOfProjects").append(tr);
@@ -417,7 +417,7 @@ function getProjects() {
 
 function updateProject() {
     $.ajax({
-        url: "gsdfgfdg",
+        url: "api/projects/"+state.modal.project.id,
         method: "PUT",
         date: $("#employee").val(),
         success: function () {
@@ -469,7 +469,6 @@ function updateProject() {
 // });
 
 function showProject(project) {
-    console.log(project)
     state.modal.project = project;
     if (project) {
         // state.modal.project = project;
@@ -479,7 +478,23 @@ function showProject(project) {
     } else {
         $('#projectModal').hide();
         $('.tableOfProjects').show();
-        $()
     }
+}
+function searchCost() {
+    var pid = $("#optionOfProject").val();
+    var date = $("#dateForCost").val();
+
+    $.ajax({
+        method: 'GET',
+        contentType: 'application/json',
+        data:date,
+        url: '/api/projects/'+pid+"/cost",
+        success: function (data) {
+            var cost = data;
+            $("#displayCost").show();
+            $("#displayCost").val("Cost till "+data+":"+cost);
+            console.log(cost)
+        },
+    })
 }
 
