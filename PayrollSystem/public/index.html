@@ -8,9 +8,9 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:700" rel="stylesheet">
     <script src="javascripts/jquery.min.js"></script>
     <script src="javascripts/bootstrap.min.js"></script>
+    <!--<script src="https://cdn.bootcss.com/angular.js/1.6.3/angular.min.js"></script>-->
     <script src="javascripts/angular.js"></script>
     <script src="javascripts/myJs.js"></script>
-
 
 
     <title></title>
@@ -59,9 +59,15 @@
                 <li role="presentation" id="createProjectTab"><a href="#createProject" aria-controls="createProject"
                                                                  role="tab"
                                                                  data-toggle="tab">Create Project</a></li>
-                <li role="presentation" id="allocateProjectTab" ng-controller="allocateProjectCT" ng-click="allocateProject()"><a href="#allocateProject" aria-controls="allocateProject"
-                                                                 role="tab"
-                                                                 data-toggle="tab">Allocate Project</a></li>
+                <li role="presentation" id="allocateProjectTab" onclick="getProjects()"><a href="#allocateProject"
+                                                                                           aria-controls="allocateProject"
+                                                                                           role="tab"
+                                                                                           data-toggle="tab">Allocate
+                    Project</a></li>
+                <li role="presentation" id="viewCostTab" onclick="getProjects()"><a href="#viewCost"
+                                                                                    aria-controls="viewCost"
+                                                                                    role="tab"
+                                                                                    data-toggle="tab">View Cost</a></li>
                 <li role="presentation"><a href="index.html" onclick="logout(event)">Log Out</a></li>
             </ul>
 
@@ -213,14 +219,15 @@
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
                                     <button type="submit" id="submit" class="btn btn-primary"
-                                            onclick="hireEmplyee(event)">Submit</button>
+                                            onclick="hireEmplyee(event)">Submit
+                                    </button>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
 
-<!-------------------------------------------------------update account---------------------------------------------------------------------------------->
+                <!-------------------------------------------------------update account---------------------------------------------------------------------------------->
                 <div role="tabpanel" class="tab-pane" id="update">
                     <br>
                     <div class="form-inline">
@@ -313,33 +320,37 @@
                     </div>
 
                 </div>
-<!-------------------------------------------------------create project--------------------------------------------------------------------->
+                <!-------------------------------------------------------create project--------------------------------------------------------------------->
                 <div role="tabpanel" class="tab-pane" id="createProject" ng-controller="createProjectCT">
                     <br>
-                    <div class="well well-sm " >
-                        <form class="form-horizontal"  name="projectForm">
+                    <div class="well well-sm ">
+                        <form class="form-horizontal" name="projectForm">
                             <div class="form-group">
-                                <label  class="col-sm-2 control-label text-left">Project Name:</label>
+                                <label class="col-sm-2 control-label text-left">Project Name:</label>
                                 <div class="col-sm-10 ">
-                                    <input class="form-control empty" ng-model="project.name" placeholder="Project Name" name="name" required>
+                                    <input class="form-control empty" ng-model="project.name" placeholder="Project Name"
+                                           name="name" required>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label  class="col-sm-2 control-label text-left">Start date:</label>
+                                <label class="col-sm-2 control-label text-left">Start date:</label>
                                 <div class="col-sm-10 ">
-                                    <input class="form-control empty" type="date" ng-model="project.start"  name="start" required>
+                                    <input class="form-control empty" type="date" ng-model="project.start" name="start"
+                                           required>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label  class="col-sm-2 control-label text-left">End date:</label>
+                                <label class="col-sm-2 control-label text-left">End date:</label>
                                 <div class="col-sm-10 ">
-                                    <input class="form-control empty" type="date" ng-model="project.end" name="end" placeholder="End Date" required>
+                                    <input class="form-control empty" type="date" ng-model="project.end" name="end"
+                                           placeholder="End Date" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label text-left">Department：</label>
                                 <div class="col-sm-10">
-                                    <select multiple class="form-control empty" ng-model="project.department"  name="department"required>
+                                    <select multiple class="form-control empty" ng-model="project.department"
+                                            name="department" required>
                                         <option>IT</option>
                                         <option>Market</option>
                                         <option>Mobile Development</option>
@@ -349,59 +360,83 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10 ">
-                                    <button  ng-disabled="projectForm.name.$invalid||projectForm.start.$invalid||projectForm.end.$invalid||projectForm.department.$invalid"  type="submit" class="btn btn-primary" ng-click="createProject()">Submit</button>
+                                    <button ng-disabled="projectForm.name.$invalid||projectForm.start.$invalid||projectForm.end.$invalid||projectForm.department.$invalid"
+                                            type="submit" class="btn btn-primary" ng-click="createProject()">Submit
+                                    </button>
                                 </div>
                             </div>
                         </form>
 
                         <div>
-                            p={{project}}
+                            <p>aa={{project}}</p>
                         </div>
 
 
                     </div>
                 </div>
-<!-------------------------------------------------------allocate project---------------------------------------------------------------------------------------------------->
-                <div role="tabpanel" class="tab-pane" id="allocateProject" ng-controller="allocateProjectCT">
+                <!-------------------------------------------------------allocate project---------------------------------------------------------------------------------------------------->
+                <div role="tabpanel" class="tab-pane" id="allocateProject">
                     <br>
-                    <p>aa={{projects}}</p>
-                    <table ng-hide="hideTablePart" class="table table-condensed  table-hover">
-                        <thead><td>Name</td><td>Start</td><td>End</td> <td></td></thead>
-                        <tr ng-repeat="project in projects">
-                            <td>{{ project.name }}</td>
-                            <td>{{ project.start }}</td>
-                            <td>{{ project.end }}</td>
-                            <td><button class="btn btn-primary" ng-click="updateProject()">Update</button></td>
-                        </tr>
+                    <table class="table table-condensed  table-hover tableOfProjects">
+                        <thead>
+                        <td>Name</td>
+                        <td>Start</td>
+                        <td>End</td>
+                        <td>Department</td>
+                        <td></td>
+                        </thead>
+                        <tbody id="tableOfProjects"></tbody>
+
                     </table>
-                    <div ng-show="showUpdatePart">
-                        <div class="well well-sm">
-                            <form class="form-horizontal" style="margin-top: 1em;">
 
 
-                                <div class="form-group">
-                                    <label
-                                           class="col-sm-2 control-label ">Employee：</label>
-                                    <div class="col-sm-10">
-                                        <select  multiple class="form-control empty" ng-model="project.employees"  ng-options="x.first for x in employees">
-                                        </select>
-                                    </div>
+                    <div class="well well-sm" id="projectModal">
+                        <form class="form-horizontal" style="margin-top: 1em;">
+                            <div class="form-group">
+                                <label
+                                        class="col-sm-2 control-label ">Name：</label>
+                                <label class="col-sm-10 control-label text-left" id="nameOfProject"></label>
+
+                            </div>
+                            <div class="form-group">
+                                <label
+                                        class="col-sm-2 control-label ">Employee：</label>
+                                <div class="col-sm-10">
+                                    <select multiple class="form-control empty" id="employee" required>
+
+                                    </select>
                                 </div>
+                            </div>
 
 
-
-                                <div style="margin-top: 1em;overflow:auto">
-                                    <span onclick="updateEmployee()"
-                                          class="btn btn-sm btn-primary  pull-left">Update</span>
-                                    <span onclick="cancel()" class="btn btn-sm btn-warning pull-right">Cancel</span>
-                                </div>
-                            </form>
-                        </div>
+                            <div style="margin-top: 1em;overflow:auto">
+                                    <span onclick="updateProject()"
+                                          class="btn btn-sm btn-primary  pull-left">Submit</span>
+                                <span onclick="cancel()" class="btn btn-sm btn-warning pull-right">Cancel</span>
+                            </div>
+                        </form>
                     </div>
 
 
                 </div>
-<!---------------------------------------------------------------------------------------------------------------------------------------------->
+                <!---------------------------------------------------------------------------------------------------------------------------------------------->
+                <div role="tabpanel" class="tab-pane" id="viewCost">
+                    <br>
+                    <div class="well well-sm">
+                        <div class="form-inline">
+                            <select id="optionOfProject">
+                            </select>
+                            <input type="date" class="form-control ">
+
+                            <button type="submit" class="btn btn-primary  pull-right" onclick="">
+                                Search
+                            </button>
+                        </div>
+                        <table id="cost" class="table table-condensed "></table>
+                    </div>
+
+                </div>
+
             </div>
 
 

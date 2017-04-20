@@ -1,30 +1,30 @@
 var state = {
-    modal: {account: null},
+    modal: {account: null, project: null},
     user: null,
-    page: {pages: ["login", "content", "accountModal", "salaryModal"], page: null},
+    page: {pages: ["login", "content", "accountModal", "salaryModal", "projectModal"], page: null},
     superiors: []
 }
 
-var rankObj={
-    admin:{
-        max:200000,
-        min:100000
+var rankObj = {
+    admin: {
+        max: 200000,
+        min: 100000
     },
-    developer:{
-        max:120000,
-        min:80000
+    developer: {
+        max: 120000,
+        min: 80000
     },
-    manager:{
-        max:160000,
-        min:90000
+    manager: {
+        max: 160000,
+        min: 90000
     }
 
 }
 
 function judgesalary(rank, sarlary) {
-    if(sarlary<=rankObj[rank].max&&sarlary>=rankObj[rank].min){
+    if (sarlary <= rankObj[rank].max && sarlary >= rankObj[rank].min) {
         return true
-    }else {
+    } else {
         return false
     }
 }
@@ -92,7 +92,7 @@ function setUser(data) {
     $("#showUser").text(data ? data.email : null);
     $("#label_name").text(data ? (data.name.first + " " + data.name.last) : null);
     $("#label_birthday").text(data ? data.birth : null);
-    $("#label_rank").text(data?data.rank:"")
+    $("#label_rank").text(data ? data.rank : "")
     $("#label_department").text(data ? data.department.join("  , ") : '');
     $("#label_superior").text(data.superior ? (data.superior.name.first + " " + data.superior.name.last) : '');
 
@@ -120,10 +120,10 @@ function login(evt) {
             method: 'POST',
             data: {"username": username, "password": password},
             success: function (data) {
-                console.log("logindata",data);
-                if(data.msg){
+                console.log("logindata", data);
+                if (data.msg) {
                     alert(data.msg);
-                }else{
+                } else {
                     setUser(data)
                 }
 
@@ -144,8 +144,8 @@ function hireEmplyee(event) {
         alert("Please fill completely!");
         return;
     }
-    if(judgesalary($("#rank").val(),$("#basic_salary").val())){
-    }else {
+    if (judgesalary($("#rank").val(), $("#basic_salary").val())) {
+    } else {
         alert("Salary is not correct! Too Low or Too High!")
         return
     }
@@ -204,7 +204,7 @@ function search() {
         url: 'api/accounts' + "/" + email,
         method: "GET",
         success: function (data) {
-            console.log("researchUser",data);
+            console.log("researchUser", data);
             if (data) {
                 updateEmployeeTable(data)
             } else {
@@ -244,13 +244,13 @@ function updateEmployee() {
     state.modal.account.add_salary = parseInt($("#add_salry").val()) - state.modal.account.salary;
     state.modal.account.rank = $("#rankmodal").val();
     state.modal.account.promotiondate = $("#promotiondate").val();
-    state.modal.account.superior =state.superiors[ parseInt($("#superiormodal").val())];
+    state.modal.account.superior = state.superiors[parseInt($("#superiormodal").val())];
     state.modal.account.department = $("#departmentmodal").val();
     if ($("#fireDateModal").val() != '') {
         state.modal.account.firedate = $("#fireDateModal").val();
     }
-    if(judgesalary($("#rankmodal").val(),$("#add_salry").val())){
-    }else {
+    if (judgesalary($("#rankmodal").val(), $("#add_salry").val())) {
+    } else {
         alert("Salary is not correct! Too Low or Too High!")
         return
     }
@@ -259,7 +259,7 @@ function updateEmployee() {
     console.log(state.modal.account)
     $.ajax({
 
-        url: 'api/accounts/' +state.modal.account.id + '/',
+        url: 'api/accounts/' + state.modal.account.id + '/',
         method: 'PUT',
         contentType: 'application/json',
         data: JSON.stringify(state.modal.account),
@@ -310,6 +310,7 @@ function showModal(account) {
 
 function cancel() {
     showModal(null);
+    showProject(null)
 }
 
 
@@ -320,7 +321,7 @@ function updateTable(salary) {
 
     // make header
     makeRow('th', props).appendTo(table);
-    console.log("salary",salary);
+    console.log("salary", salary);
     salary.forEach(singleSalary => {
         var tr = makeRow('td', propOfData.map(p => singleSalary[p].toFixed(2)));
         tr.appendTo(table);
@@ -334,79 +335,151 @@ function makeRow(type, values) {
 
 function searchSalary() {
     var time = $('#salryDateForSewarch').val();
-    console.log('wantedSalaryDate',time);
-    if(compareTime(time, state.user.hiredate)){
+    console.log('wantedSalaryDate', time);
+    if (compareTime(time, state.user.hiredate)) {
         $.ajax({
-            url : 'api/accounts/'+state.user.id+'/salarys',
-            method : 'POST',
-            data : {reseachdate : time},
-            success : updateTable
+            url: 'api/accounts/' + state.user.id + '/salarys',
+            method: 'POST',
+            data: {reseachdate: time},
+            success: updateTable
         });
-    }else{
+    } else {
         alert("you hav not hired!!!");
     }
 
 }
 
-function compareTime(now, pre){
+function compareTime(now, pre) {
     return new Date(now) >= new Date(pre);
 }
 //------------------------------------------------------------angular part-------------------------------------------------------------------
 
 var app = angular.module('myApp', []);
-app.controller('createProjectCT', function($scope,$http) {
-    $scope.createProject=function () {
+app.controller('createProjectCT', function ($scope, $http) {
+    // $scope.project.start=$filter(new Date());
+    // $scope.project.start=$filter('date')($scope.project.start, 'yyyy-MM-dd');
+
+    $scope.createProject = function () {
         $http({
             method: 'POST',
             contentType: 'application/json',
-            data:$scope.project,
+            data: $scope.project,
             url: '/api/projects/'
         }).then(function successCallback(response) {
             alert("Create successfully!");
-            $scope.project={};
+            $scope.project = {};
         }, function errorCallback(response) {
 
         });
     }
 });
 
+function getProjects() {
 
-app.controller('allocateProjectCT', function($scope,$http) {
-    $scope.showUpdatePart=true;
-    $scope.allocateProject=function () {
-        $http({
-            method: 'GET',
-            contentType: 'application/json',
-            data:state.user,
-            url: '/api/projects/'
-        }).then(function successCallback(response) {
-            console.log(response.data)
-            $scope.projects=response.data;
+    $.ajax({
+        method: 'GET',
+        contentType: 'application/json',
+        data: state.user,
+        url: '/api/projects/',
+        success: function (data) {
+            $("#optionOfProject").empty();
 
-        }, function errorCallback(response) {
+            $("#tableOfProjects").empty();
+            var propOfData = ['name', 'start', 'end', 'department'];
+            data.forEach(project => {
+                var tr = makeRow('td', propOfData.map(p => project[p]));
+                var option="<option value='"+project.id+"'>"+project.name+"</option>"
+                console.log(project);
+                tr.click((event) => showProject(project));
+                $("#tableOfProjects").append(tr);
+                $("#optionOfProject").append(option)
 
-        });
+            })
+        },
+    })
+
+
+    $.ajax({
+        method: 'GET',
+        contentType: 'application/json',
+        data: state.user,
+        url: '/api/departments/developers/',
+        success: function (data) {
+            $("#employee").empty();
+            data.forEach(employee => {
+                var option = "<option value='" + employee.email + "'>" + employee.name.first + " " + employee.name.last + "</option>"
+                $("#employee").append(option)
+            })
+        },
+    })
+
+}
+
+function updateProject() {
+    $.ajax({
+        url: "gsdfgfdg",
+        method: "PUT",
+        date: $("#employee").val(),
+        success: function () {
+
+        },
+        error: function () {
+
+        }
+    });
+
+}
+
+// app.controller('allocateProjectCT', function($scope,$http) {
+//     $scope.getprj=function() {
+//         $http({
+//             method: 'GET',
+//             contentType: 'application/json',
+//             data: state.user,
+//             url: '/api/projects/'
+//         }).then(function successCallback(response) {
+//             console.log(response.data)
+//             $scope.projects = response.data;
+//
+//         }, function errorCallback(response) {
+//
+//         });
+//     }
+//     $scope.getprj();
+//     $scope.getAllEmployee=function () {
+//         $http({
+//             method: 'GET',
+//             contentType: 'application/json',
+//             data:state.user,
+//             url: '/departments/developers/'
+//         }).then(function successCallback(response) {
+//             $scope.employees=response.data;
+//         }, function errorCallback(response) {
+//
+//         });
+//     }
+//     $scope.updateProject=function () {
+//         $scope.hideTablePart=true;
+//         $scope.showUpdatePart=$scope.hideTablePart;
+//         $scope.getAllEmployee();
+//
+//
+//
+//     }
+// });
+
+function showProject(project) {
+    console.log(project)
+    state.modal.project = project;
+    if (project) {
+        // state.modal.project = project;
+        $('#projectModal').show();
+        $('.tableOfProjects').hide();
+        $('#nameOfProject').text(project.name);
+    } else {
+        $('#projectModal').hide();
+        $('.tableOfProjects').show();
+        $()
     }
-    $scope.getAllEmployee=function () {
-        $http({
-            method: 'GET',
-            contentType: 'application/json',
-            data:state.user,
-            url: '/departments/developers/'
-        }).then(function successCallback(response) {
-            $scope.employees=response.data;
-        }, function errorCallback(response) {
-
-        });
-    }
-    $scope.updateProject=function () {
-        $scope.hideTablePart=true;
-        $scope.showUpdatePart=$scope.hideTablePart;
-        $scope.getAllEmployee();
-
-
-
-    }
-});
-
+}
 
