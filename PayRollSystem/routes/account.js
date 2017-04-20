@@ -93,3 +93,17 @@ function updateAccount(aid, newAccount, cb){
 
 }
 module.exports.updateAccount = updateAccount;
+
+
+function getAccountByApartment(departments, cb) {
+    var query = { status : "true", rank : "developer" };
+    var result = [];
+    for( var i =0; i < departments.length; i ++){
+        var condint = {'department' : departments[i]};
+        result.push(condint);
+    }
+    console.log("array", result);
+    query.$or = result;
+    Account.find(query, cb);
+}
+module.exports.getAccountByApartment = getAccountByApartment;

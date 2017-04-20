@@ -10,7 +10,7 @@ var accountSchema = mongoose.Schema( {
     birth : String,
     email : String,
     password : String,
-    department : String,
+    //department : String,
     salary: Number,//anual salary
     add_salary : {
         type : Number,

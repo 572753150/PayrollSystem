@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var accounts = require("./account")
 var salarys = require('./salary');
-
+var project = require('./project');
 
 router.get('/accounts/init', function (req, res, next) { //初始化数据库
     accounts.init((err, result) => res.json(result));
@@ -148,6 +148,62 @@ router.put('/accounts/:aid/salarys/:sid', function (req, res, next) { // 修改�
             res.json(thing);
         }
     });
+});
+
+router.post('/projects/', function (req, res, next) {
+    var data = req.body;
+    project.createProject(data, function (err, result) {
+        if(err){
+            res.send({err : 'create failse'});
+        }else{
+            res.send(result);
+        }
+    });
+});
+
+router.put('/projects/:pid/', function (req, res, next) {
+
+});
+
+router.get('/projects/',function(req, res, next){
+
+    var user = req.session.user;
+    if(user.rank == 'manager'){
+        console.log("user.department", user.department);
+        project.getProjectInDepartment(user.department, function(err, data){
+            if(err){
+                console.log(err);
+                res.send(err);
+            }else{
+                console.log("data", data);
+                res.send(data);
+            }
+        })
+    }else{
+        res.send(result);
+    }
+});
+
+router.get('/departments/developers/', function(req, res, next){
+    var user = req.session.user;
+    if(user.rank == 'manager'){
+        console.log("user.department", user.department);
+        accounts.getAccountByApartment(user.department, function(err, data){
+            if(err){
+                console.log(err);
+                res.send(err);
+            }else{
+                console.log("accounts ::", data);
+                res.send(data);
+            }
+        })
+    }else{
+        res.send(result);
+    }
+})
+
+router.get('projects/:pid/', function (req, res, next) {
+
 });
 
 module.exports = router;

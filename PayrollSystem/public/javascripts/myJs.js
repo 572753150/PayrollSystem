@@ -380,7 +380,9 @@ app.controller('allocateProjectCT', function($scope,$http) {
             data:state.user,
             url: '/api/projects/'
         }).then(function successCallback(response) {
+            console.log(response.data)
             $scope.projects=response.data;
+
         }, function errorCallback(response) {
 
         });
@@ -390,7 +392,7 @@ app.controller('allocateProjectCT', function($scope,$http) {
             method: 'GET',
             contentType: 'application/json',
             data:state.user,
-            url: '/api/projects/'
+            url: '/departments/developers/'
         }).then(function successCallback(response) {
             $scope.employees=response.data;
         }, function errorCallback(response) {

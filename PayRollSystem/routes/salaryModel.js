@@ -7,10 +7,10 @@ var salarySchema = mongoose.Schema({
         type : Number,
         default:0
     },
-    reward : {
-        type : Number,
-        default:0
-    },
+    // reward : {
+    //     type : Number,
+    //     default:0
+    // },
     tax : Number,
     net_salary : Number,
     date : String

@@ -40,9 +40,9 @@ function update( aid, Sid, object, cb ) {
         if( err ) { cb( err, null ); }
         else {
             salary.deduction = object.deduction;
-            salary.reward = object.reward;
-            salary.tax = (salary.basic_salary - salary.deduction + salary.reward) * 0.055;
-            salary.final = (salary.basic_salary - salary.deduction + salary.reward) * 9.945;
+            //salary.reward = object.reward;
+            salary.tax = (salary.basic_salary - salary.deduction ) * 0.055;
+            salary.final = (salary.basic_salary - salary.deduction ) * 9.945;
             salary.end = Date.now();
             salary.save( cb );
         }
