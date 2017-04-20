@@ -87,6 +87,12 @@ function setUser(data) {
         $("#updateTab").hide();
     } else {
         $("#superior").empty();
+        if(data.rank == "admin"){
+            $("#allocateProjectTab").hide();
+        }
+        if(data.rank == "manager"){
+            $("#createProjectTab").hide();
+        }
         getAllSuperior();
     }
     $("#showUser").text(data ? data.email : null);
