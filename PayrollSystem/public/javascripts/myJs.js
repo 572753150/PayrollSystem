@@ -351,8 +351,60 @@ function searchSalary() {
 function compareTime(now, pre){
     return new Date(now) >= new Date(pre);
 }
+//------------------------------------------------------------angular part-------------------------------------------------------------------
+
+var app = angular.module('myApp', []);
+app.controller('createProjectCT', function($scope,$http) {
+    $scope.createProject=function () {
+        $http({
+            method: 'POST',
+            contentType: 'application/json',
+            data:$scope.project,
+            url: '/api/projects/'
+        }).then(function successCallback(response) {
+            alert("Create successfully!");
+            $scope.project={};
+        }, function errorCallback(response) {
+
+        });
+    }
+});
+
+
+app.controller('allocateProjectCT', function($scope,$http) {
+    $scope.showUpdatePart=true;
+    $scope.allocateProject=function () {
+        $http({
+            method: 'GET',
+            contentType: 'application/json',
+            data:state.user,
+            url: '/api/projects/'
+        }).then(function successCallback(response) {
+            $scope.projects=response.data;
+        }, function errorCallback(response) {
+
+        });
+    }
+    $scope.getAllEmployee=function () {
+        $http({
+            method: 'GET',
+            contentType: 'application/json',
+            data:state.user,
+            url: '/api/projects/'
+        }).then(function successCallback(response) {
+            $scope.employees=response.data;
+        }, function errorCallback(response) {
+
+        });
+    }
+    $scope.updateProject=function () {
+        $scope.hideTablePart=true;
+        $scope.showUpdatePart=$scope.hideTablePart;
+        $scope.getAllEmployee();
 
 
 
+    }
+});
 
 
